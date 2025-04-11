@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/IntroMenu.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/SelectRoles.unity
+    guid: ed0e65fb1b7a8f945a68b3b3ca8ece03
+  - enabled: 1
+    path: Assets/Scenes/EnterNames.unity
+    guid: 11034904e1a5c4949874113207160aac
+  - enabled: 1
+    path: Assets/Scenes/Night1.unity
+    guid: ac8cdff78d7037c429a949d775d181f7
+  m_configObjects: {}
