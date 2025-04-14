@@ -6,12 +6,19 @@ using UnityEngine;
 public class NightOne : MonoBehaviour
 {
     public TMP_Text gameText;
+	public bool actionDone;
 
 	void Start()
 	{
 		float duration = 5f;
 		StartCoroutine(TimeBetweenRoles(duration));
 	}
+
+	public void ChangeRole()
+	{
+		Debug.Log("whatever");
+	}
+
 
 	IEnumerator TimeBetweenRoles(float duration)
 	{
@@ -65,4 +72,8 @@ public class NightOne : MonoBehaviour
 		//poisoner sleeps
 	}
 
+	public void Spy()
+	{
+		gameText.text = "spy do ur thing";
+	}
 }
