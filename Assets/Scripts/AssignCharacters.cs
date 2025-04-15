@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static CharacterLibrary;
 
 public class AssignCharacters : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class AssignCharacters : MonoBehaviour
 
 	private List<Player> players;
 
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -30,6 +32,7 @@ public class AssignCharacters : MonoBehaviour
 
 		SetCharacterNumber();
 		GivePlayerCharacters();
+		GetAssignedRoleNames();
 		Debug.Log("town: " + townNumber.ToString());
 		Debug.Log("outsiders: " + outsiderNumber.ToString());
 		Debug.Log("minions: " + minionNumber.ToString());
@@ -83,7 +86,7 @@ public class AssignCharacters : MonoBehaviour
 		// Create players and assign them roles
 		for (int i = 0; i < GameManager.playerNumber; i++)
 		{
-			players.Add(new Player("Player " + (i + 1)));
+			players.Add(new Player(GameManager.playerTotalNames[i]));
 		}
 
 		// Assign Townsfolk roles
@@ -183,9 +186,24 @@ public class AssignCharacters : MonoBehaviour
 		players = players2;
 	}
 
+	public List<string> GetAssignedRoleNames()
+	{
+		List<string> assignedRoleNames = new List<string>();
 
+		foreach (var player in players)
+		{
+			if (player.characterName != "Unknown")
+			{
+				assignedRoleNames.Add(player.characterName);
+			}
+		}
 
+		return assignedRoleNames;
+	}
 
-
+	public List<Player> GetPlayers()
+	{
+		return players;
+	}
 
 }

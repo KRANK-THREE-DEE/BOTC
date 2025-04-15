@@ -22,6 +22,8 @@ public class PlayerOrderManager : MonoBehaviour
 		if (!string.IsNullOrWhiteSpace(input.text))
 		{
 			GameManager.playerOrder.Add(new Player(input.text));
+			GameManager.playerTotalNames.Add(input.text);
+			print("Created Player: " +  input.text);
 			input.text = ""; // Clear the input field after entering a name
 			UpdatePlayerList(); // Update the on-screen list
 		}
@@ -36,6 +38,7 @@ public class PlayerOrderManager : MonoBehaviour
 		{
 			playerList.text += $"{player.playerName}\n";
 		}
+
 	}
 
 	public void UndoButton()

@@ -1,26 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 public class NightOne : MonoBehaviour
 {
     public TMP_Text gameText;
-	public bool actionDone;
+	public string currentRole;
+	public GameObject RoleManager;
+	public List<string> roleList;
+	public List<string> townsfolkInPlay;
+
+	public GameObject Scroll;
+	public TMP_Text infoText;
+
+	public GameObject offscreenLocation;
+	public GameObject onscreenLocation;
 
 	void Start()
 	{
+		Scroll.transform.position = offscreenLocation.transform.position;
+		infoText.gameObject.transform.position = offscreenLocation.transform.position;
+
+		roleList = RoleManager.GetComponent<AssignCharacters>().GetAssignedRoleNames(); //list of all roles that have been assigned to players in game
+
 		float duration = 5f;
-		StartCoroutine(TimeBetweenRoles(duration));
+		StartCoroutine(StartNight(duration));
 	}
 
-	public void ChangeRole()
+	public void ChangeRole() //runs every time the done button is hit to change to next role
 	{
-		Debug.Log("whatever");
+		print("RUNNING");
+		if (currentRole == "poisoner")
+		{
+			Debug.Log("THE CURRENT ROLE IS " + currentRole);  
+			Scroll.transform.position = offscreenLocation.transform.position;
+			Spy();
+		}
+		else
+		if (currentRole == "spy")
+		{
+			Debug.Log("THE CURRENT ROLE IS " + currentRole);  
+			Washerwoman(); 
+		}
+		else 
+		if(currentRole == "washerwoman")
+		{
+
+		}
 	}
 
 
-	IEnumerator TimeBetweenRoles(float duration)
+	IEnumerator StartNight(float duration)
 	{
 		gameText.text = "Take a sec, go to sleep.";
 		Debug.Log($"Started at {Time.time}, waiting for {duration} seconds");
@@ -64,6 +96,8 @@ public class NightOne : MonoBehaviour
 
 	public void Poisoner()
 	{
+		Scroll.transform.position = onscreenLocation.transform.position;
+		currentRole = "poisoner";
 		gameText.text = "poisoner do ur thing";
 		//display players on screen (scroll view same as roles earlier)
 		//poisoner chooses one to poison
@@ -74,6 +108,38 @@ public class NightOne : MonoBehaviour
 
 	public void Spy()
 	{
+		currentRole = "spy";
 		gameText.text = "spy do ur thing";
+		//can't program spy yet, he's hella complicated
+	}
+
+	public void Washerwoman()
+	{
+		infoText.gameObject.transform.position = onscreenLocation.transform.position;
+		currentRole = "washerwoman";
+		gameText.text = "washerwoman do ur thing";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allTown = new List<Player>();
+		foreach (Player x in allPlayers)
+		{
+			if (x.alignment == CharacterLibrary.Alignment.Townsfolk)
+			{
+				allTown.Add(x);
+			}
+		}
+		int random = Random.Range(0, allTown.Count);
+		Player selectedTown = allTown[random];
+		int random2 = Random.Range(0,allPlayers.Count);
+		Player selectedRandom = allPlayers[random2];
+		while(selectedTown == selectedRandom || selectedRandom.characterName == "Washerwoman" || selectedTown.characterName == "Washerwoman")
+		{
+			random = Random.Range(0, allTown.Count);
+			selectedTown = allTown[random];
+			random2 = Random.Range(0, allPlayers.Count);
+			selectedRandom = allPlayers[random2];
+		}
+		print("Selected Town: " + selectedTown.playerName + " is the " + selectedTown.characterName);
+		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
+		infoText.text += "Either " + selectedTown.playerName + " or " + selectedRandom.playerName + " is the " + selectedTown.characterName + ".";
 	}
 }
