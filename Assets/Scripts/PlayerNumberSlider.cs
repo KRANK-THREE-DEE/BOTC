@@ -12,12 +12,12 @@ public class PlayerNumberSlider : MonoBehaviour
 
 	public void Start()
 	{
-		GameManager.playerNumber = 5;
+		GameManager.Instance.playerNumber = 5;
 	}
 	public void ChangeNumber()
 	{
 		playerNumberText.text = slider.value.ToString();
-		GameManager.playerNumber = (int)slider.value;
+		GameManager.Instance.playerNumber = (int)slider.value;
 
 	}
 }

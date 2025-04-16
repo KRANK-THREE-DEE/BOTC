@@ -15,7 +15,7 @@ public class ChangeScene : MonoBehaviour
 
 	public void Scene3()
 	{
-		if (GameManager.playerOrder.Count < GameManager.playerNumber)
+		if (GameManager.Instance.playerOrder.Count < GameManager.Instance.playerNumber)
 		{
 			notEnough.SetActive(true);
 			Debug.Log("Not enough players.");

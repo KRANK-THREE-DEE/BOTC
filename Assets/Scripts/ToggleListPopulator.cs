@@ -21,15 +21,15 @@ public class ToggleListPopulator : MonoBehaviour
 			Destroy(child.gameObject);
 		}
 
-		for (int i = 0; i < GameManager.playerNumber; i++)
+		for (int i = 0; i < GameManager.Instance.playerNumber; i++)
 		{
 			GameObject toggleObj = Instantiate(togglePrefab, contentParent);
 			Toggle toggle = toggleObj.GetComponent<Toggle>();
 			Text label = toggleObj.GetComponentInChildren<Text>();
 
-			if (label != null && i < GameManager.playerOrder.Count)
+			if (label != null && i < GameManager.Instance.playerOrder.Count)
 			{
-				label.text = GameManager.playerOrder[i].playerName;
+				label.text = GameManager.Instance.playerOrder[i].playerName;
 			}
 
 		}

@@ -13,7 +13,7 @@ public class PlayerOrderManager : MonoBehaviour
 
 	public void SaveName()
 	{
-		if (GameManager.playerOrder.Count >= GameManager.playerNumber)
+		if (GameManager.Instance.playerOrder.Count >= GameManager.Instance.playerNumber)
 		{
 			Debug.Log("Maximum number of players reached!");
 			return;
@@ -21,8 +21,8 @@ public class PlayerOrderManager : MonoBehaviour
 
 		if (!string.IsNullOrWhiteSpace(input.text))
 		{
-			GameManager.playerOrder.Add(new Player(input.text));
-			GameManager.playerTotalNames.Add(input.text);
+			GameManager.Instance.playerOrder.Add(new Player(input.text));
+			GameManager.Instance.playerTotalNames.Add(input.text);
 			print("Created Player: " +  input.text);
 			input.text = ""; // Clear the input field after entering a name
 			UpdatePlayerList(); // Update the on-screen list
@@ -34,7 +34,7 @@ public class PlayerOrderManager : MonoBehaviour
 	public void UpdatePlayerList()
 	{
 		playerList.text = "Players:\n";
-		foreach (var player in GameManager.playerOrder)
+		foreach (var player in GameManager.Instance.playerOrder)
 		{
 			playerList.text += $"{player.playerName}\n";
 		}
@@ -43,8 +43,8 @@ public class PlayerOrderManager : MonoBehaviour
 
 	public void UndoButton()
 	{
-		if (GameManager.playerOrder.Count >= 1)
-		GameManager.playerOrder.RemoveAt(GameManager.playerOrder.Count - 1);
+		if (GameManager.Instance.playerOrder.Count >= 1)
+		GameManager.Instance.playerOrder.RemoveAt(GameManager.Instance.playerOrder.Count - 1);
 		UpdatePlayerList();
 	}
 
@@ -52,17 +52,17 @@ public class PlayerOrderManager : MonoBehaviour
 	//methods that GPT added that i'll maybe probably need??
 	public static Player GetNextPlayer(string currentPlayer)
 	{
-		int index = GameManager.playerOrder.FindIndex(p => p.playerName == currentPlayer);
-		if (index == -1 || GameManager.playerOrder.Count == 0) return null;
+		int index = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer);
+		if (index == -1 || GameManager.Instance.playerOrder.Count == 0) return null;
 
-		return GameManager.playerOrder[(index + 1) % GameManager.playerOrder.Count];
+		return GameManager.Instance.playerOrder[(index + 1) % GameManager.Instance.playerOrder.Count];
 	}
 
 	public static Player GetPreviousPlayer(string currentPlayer)
 	{
-		int index = GameManager.playerOrder.FindIndex(p => p.playerName == currentPlayer);
-		if (index == -1 || GameManager.playerOrder.Count == 0) return null;
+		int index = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer);
+		if (index == -1 || GameManager.Instance.playerOrder.Count == 0) return null;
 
-		return GameManager.playerOrder[(index - 1 + GameManager.playerOrder.Count) % GameManager.playerOrder.Count]; // Wrap around backward
+		return GameManager.Instance.playerOrder[(index - 1 + GameManager.Instance.playerOrder.Count) % GameManager.Instance.playerOrder.Count]; // Wrap around backward
 	}
 }

@@ -12,21 +12,44 @@ public class AssignCharacters : MonoBehaviour
 	public int demonNumber = 1;
 
 	// List of roles for each alignment
-	private List<CharacterLibrary.CharacterRole> allTownsfolkRoles;
-	private List<CharacterLibrary.CharacterRole> allOutsiderRoles;
-	private List<CharacterLibrary.CharacterRole> allMinionRoles;
-	private List<CharacterLibrary.CharacterRole> allDemonRoles;
+	private List<CharacterLibrary.CharacterRole> allTownsfolkRoles = new List<CharacterLibrary.CharacterRole>();
+	private List<CharacterLibrary.CharacterRole> allOutsiderRoles = new List<CharacterLibrary.CharacterRole>();
+	private List<CharacterLibrary.CharacterRole> allMinionRoles = new List<CharacterLibrary.CharacterRole>();
+	private List<CharacterLibrary.CharacterRole> allDemonRoles = new List<CharacterLibrary.CharacterRole>();
 
-	private List<Player> players;
+	private List<Player> players = new List<Player>();
 
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		allTownsfolkRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.townsfolkRoles);
-		allOutsiderRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.outsiderRoles);
-		allMinionRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.minionRoles);
-		allDemonRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.demonRoles);
+		//allTownsfolkRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.townsfolkRoles);
+		//allOutsiderRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.outsiderRoles);
+		//allMinionRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.minionRoles);
+		//allDemonRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.demonRoles);
+
+		for(int i = 0; i < GameManager.Instance.characterRolesInCurrentGame.Count; i++)
+		{
+			if (GameManager.Instance.characterRolesInCurrentGame[i].alignment == Alignment.Townsfolk)
+			{
+				allTownsfolkRoles.Add(GameManager.Instance.characterRolesInCurrentGame[i]);
+			}
+			else
+			if (GameManager.Instance.characterRolesInCurrentGame[i].alignment == Alignment.Outsider)
+			{
+				allOutsiderRoles.Add(GameManager.Instance.characterRolesInCurrentGame[i]);
+			}
+			else
+			if (GameManager.Instance.characterRolesInCurrentGame[i].alignment == Alignment.Demon)
+			{
+				allDemonRoles.Add(GameManager.Instance.characterRolesInCurrentGame[i]);
+			}
+			else
+			if (GameManager.Instance.characterRolesInCurrentGame[i].alignment == Alignment.Minion)
+			{
+				allMinionRoles.Add(GameManager.Instance.characterRolesInCurrentGame[i]);
+			}
+		}
 
 		players = new List<Player>(); // Initialize players list
 
@@ -42,37 +65,37 @@ public class AssignCharacters : MonoBehaviour
 	// Set the number of characters based on the player count
 	public void SetCharacterNumber()
 	{
-		if (GameManager.playerNumber == 5)
+		if (GameManager.Instance.playerNumber == 5)
 		{
 			townNumber = 3;
 			outsiderNumber = 0;
 			minionNumber = 1;
 		}
-		if (GameManager.playerNumber == 6)
+		if (GameManager.Instance.playerNumber == 6)
 		{
 			townNumber = 3;
 			outsiderNumber = 1;
 			minionNumber = 1;
 		}
-		if (GameManager.playerNumber == 7)
+		if (GameManager.Instance.playerNumber == 7)
 		{
 			townNumber = 5;
 			outsiderNumber = 0;
 			minionNumber = 1;
 		}
-		if (GameManager.playerNumber == 8)
+		if (GameManager.Instance.playerNumber == 8)
 		{
 			townNumber = 5;
 			outsiderNumber = 1;
 			minionNumber = 1;
 		}
-		if (GameManager.playerNumber == 9)
+		if (GameManager.Instance.playerNumber == 9)
 		{
 			townNumber = 5;
 			outsiderNumber = 2;
 			minionNumber = 1;
 		}
-		if (GameManager.playerNumber == 10)
+		if (GameManager.Instance.playerNumber == 10)
 		{
 			townNumber = 7;
 			outsiderNumber = 0;
@@ -84,9 +107,9 @@ public class AssignCharacters : MonoBehaviour
 	public void GivePlayerCharacters()
 	{
 		// Create players and assign them roles
-		for (int i = 0; i < GameManager.playerNumber; i++)
+		for (int i = 0; i < GameManager.Instance.playerNumber; i++)
 		{
-			players.Add(new Player(GameManager.playerTotalNames[i]));
+			players.Add(new Player(GameManager.Instance.playerTotalNames[i]));
 		}
 
 		// Assign Townsfolk roles
@@ -102,7 +125,7 @@ public class AssignCharacters : MonoBehaviour
 		AssignRoles(allDemonRoles, demonNumber);
 
 		ShuffleCharacterNamesAndAlignments(players);
-		for(int i = 0; i < GameManager.playerNumber; i++)
+		for(int i = 0; i < GameManager.Instance.playerNumber; i++)
 		{
 			Debug.Log(players[i].playerName + " is assigned " + players[i].characterName);
 		}
@@ -147,8 +170,8 @@ public class AssignCharacters : MonoBehaviour
 
 	public void ShuffleCharacterNamesAndAlignments(List<Player> players2)
 	{
-		// Check if the player list is empty or contains one player
-		if (players2 == null || players2.Count < 2) return;
+		// Check if the player list is empty or contains less than 5 players
+		if (players2 == null || players2.Count < 5) return;
 
 		// Create a random number generator
 		System.Random random = new System.Random();

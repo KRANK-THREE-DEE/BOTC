@@ -47,7 +47,8 @@ public class NightOne : MonoBehaviour
 		else 
 		if(currentRole == "washerwoman")
 		{
-
+			infoText.text = "";
+			Librarian();
 		}
 	}
 
@@ -59,7 +60,7 @@ public class NightOne : MonoBehaviour
 		yield return new WaitForSeconds(duration);
 		Debug.Log($"Ended at {Time.time}");
 		//whatever thing has minions wake up here. probably audio cue.
-		if (GameManager.playerNumber >= 7)
+		if (GameManager.Instance.playerNumber >= 7)
 		{
 			StartCoroutine(Minions(5f));
 		}
@@ -141,5 +142,42 @@ public class NightOne : MonoBehaviour
 		print("Selected Town: " + selectedTown.playerName + " is the " + selectedTown.characterName);
 		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
 		infoText.text += "Either " + selectedTown.playerName + " or " + selectedRandom.playerName + " is the " + selectedTown.characterName + ".";
+	}
+
+	public void Librarian()
+	{
+		currentRole = "librarian";
+		gameText.text = "librarian do ur thing";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allOutsiders = new List<Player>();
+		foreach (Player x in allPlayers)
+		{
+			if (x.alignment == CharacterLibrary.Alignment.Outsider)
+			{
+				allOutsiders.Add(x);
+			}
+		}
+		if (allOutsiders.Count == 0)
+		{
+			infoText.text += "There are no Outsiders!";
+		}
+		else
+		{
+			int random = Random.Range(0, allOutsiders.Count);
+			Player selectedOutsider = allOutsiders[random];
+			int random2 = Random.Range(0, allPlayers.Count);
+			Player selectedRandom = allPlayers[random2];
+			while (selectedOutsider == selectedRandom || selectedRandom.characterName == "Librarian" || selectedOutsider.characterName == "Librarian")
+			{
+				random = Random.Range(0, allOutsiders.Count);
+				selectedOutsider = allOutsiders[random];
+				random2 = Random.Range(0, allPlayers.Count);
+				selectedRandom = allPlayers[random2];
+			}
+			print("Selected Outsider: " + selectedOutsider.playerName + " is the " + selectedOutsider.characterName);
+			print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
+			infoText.text += "Either " + selectedOutsider.playerName + " or " + selectedRandom.playerName + " is the " + selectedOutsider.characterName + ".";
+		}
+
 	}
 }

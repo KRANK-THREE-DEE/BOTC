@@ -9,7 +9,7 @@ public class ShowPlayerNumber : MonoBehaviour
 
 	void Start()
 	{
-		playerNumberText.text = "Number of players: " + GameManager.playerNumber.ToString();
+		playerNumberText.text = "Number of players: " + GameManager.Instance.playerNumber.ToString();
 	}
 
 }

@@ -5,29 +5,6 @@ using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
-	public static bool impAvailable;
-	public static bool poisonerAvailable;
-	public static bool spyAvailable;
-	public static bool scarletWomanAvailable;
-	public static bool baronAvailable;
-	public static bool butlerAvailable;
-	public static bool recluseAvailable;
-	public static bool drunkAvailable;
-	public static bool saintAvailable;
-	public static bool washerwomanAvailable;
-	public static bool librarianAvailable;
-	public static bool investigatorAvailable;
-	public static bool chefAvailable;
-	public static bool empathAvailable;
-	public static bool fortuneTellerAvailable;
-	public static bool undertakerAvailable;
-	public static bool monkAvailable;
-	public static bool ravenkeeperAvailable;
-	public static bool virginAvailable;
-	public static bool slayerAvailable;
-	public static bool soldierAvailable;
-	public static bool mayorAvailable;
-
 	public Toggle impToggle;
 	public Toggle poisonerToggle;
 	public Toggle spyToggle;
@@ -52,36 +29,14 @@ public class CharacterManager : MonoBehaviour
 	public Toggle mayorToggle;
 
 	public bool SelectAllHit;
+	public List<CharacterLibrary.CharacterRole> AvailableRoles = new List<CharacterLibrary.CharacterRole>();
 
 	private void Start()
 	{
-		// Initialize most roles as false (not available)
-		impAvailable = true;
-		poisonerAvailable = false;
-		spyAvailable = false;
-		scarletWomanAvailable = false;
-		baronAvailable = false;
-		butlerAvailable = false;
-		recluseAvailable = false;
-		drunkAvailable = false;
-		saintAvailable = false;
-		washerwomanAvailable = false;
-		librarianAvailable = false;
-		investigatorAvailable = false;
-		chefAvailable = false;
-		empathAvailable = false;
-		fortuneTellerAvailable = false;
-		undertakerAvailable = false;
-		monkAvailable = false;
-		ravenkeeperAvailable = false;
-		virginAvailable = false;
-		slayerAvailable = false;
-		soldierAvailable = false;
-		mayorAvailable = false;
+
 	}
 
-	// Toggle the roles based on the button clicked
-	public void ToggleRole(GameObject thisObject)
+	public void ToggleCharacter(GameObject thisObject)
 	{
 		string roleName = thisObject.GetComponentInChildren<Text>().text;
 
@@ -90,70 +45,70 @@ public class CharacterManager : MonoBehaviour
 			switch (roleName)
 			{
 				case "Imp":
-					impAvailable = !impAvailable;
+					GameManager.Instance.impAvailable = !GameManager.Instance.impAvailable;
 					break;
 				case "Poisoner":
-					poisonerAvailable = !poisonerAvailable;
+					GameManager.Instance.poisonerAvailable = !GameManager.Instance.poisonerAvailable;
 					break;
 				case "Spy":
-					spyAvailable = !spyAvailable;
+					GameManager.Instance.spyAvailable = !GameManager.Instance.spyAvailable;
 					break;
 				case "Scarlet Woman":
-					scarletWomanAvailable = !scarletWomanAvailable;
+					GameManager.Instance.scarletWomanAvailable = !GameManager.Instance.scarletWomanAvailable;
 					break;
 				case "Baron":
-					baronAvailable = !baronAvailable;
+					GameManager.Instance.baronAvailable = !GameManager.Instance.baronAvailable;
 					break;
 				case "Butler":
-					butlerAvailable = !butlerAvailable;
+					GameManager.Instance.butlerAvailable = !GameManager.Instance.butlerAvailable;
 					break;
 				case "Recluse":
-					recluseAvailable = !recluseAvailable;
+					GameManager.Instance.recluseAvailable = !GameManager.Instance.recluseAvailable;
 					break;
 				case "Drunk":
-					drunkAvailable = !drunkAvailable;
+					GameManager.Instance.drunkAvailable = !GameManager.Instance.drunkAvailable;
 					break;
 				case "Saint":
-					saintAvailable = !saintAvailable;
+					GameManager.Instance.saintAvailable = !GameManager.Instance.saintAvailable;
 					break;
 				case "Washerwoman":
-					washerwomanAvailable = !washerwomanAvailable;
+					GameManager.Instance.washerwomanAvailable = !GameManager.Instance.washerwomanAvailable;
 					break;
 				case "Librarian":
-					librarianAvailable = !librarianAvailable;
+					GameManager.Instance.librarianAvailable = !GameManager.Instance.librarianAvailable;
 					break;
 				case "Investigator":
-					investigatorAvailable = !investigatorAvailable;
+					GameManager.Instance.investigatorAvailable = !GameManager.Instance.investigatorAvailable;
 					break;
 				case "Chef":
-					chefAvailable = !chefAvailable;
+					GameManager.Instance.chefAvailable = !GameManager.Instance.chefAvailable;
 					break;
 				case "Empath":
-					empathAvailable = !empathAvailable;
+					GameManager.Instance.empathAvailable = !GameManager.Instance.empathAvailable;
 					break;
 				case "Fortune Teller":
-					fortuneTellerAvailable = !fortuneTellerAvailable;
+					GameManager.Instance.fortuneTellerAvailable = !GameManager.Instance.fortuneTellerAvailable;
 					break;
 				case "Undertaker":
-					undertakerAvailable = !undertakerAvailable;
+					GameManager.Instance.undertakerAvailable = !GameManager.Instance.undertakerAvailable;
 					break;
 				case "Monk":
-					monkAvailable = !monkAvailable;
+					GameManager.Instance.monkAvailable = !GameManager.Instance.monkAvailable;
 					break;
 				case "Ravenkeeper":
-					ravenkeeperAvailable = !ravenkeeperAvailable;
+					GameManager.Instance.ravenkeeperAvailable = !GameManager.Instance.ravenkeeperAvailable;
 					break;
 				case "Virgin":
-					virginAvailable = !virginAvailable;
+					GameManager.Instance.virginAvailable = !GameManager.Instance.virginAvailable;
 					break;
 				case "Slayer":
-					slayerAvailable = !slayerAvailable;
+					GameManager.Instance.slayerAvailable = !GameManager.Instance.slayerAvailable;
 					break;
 				case "Soldier":
-					soldierAvailable = !soldierAvailable;
+					GameManager.Instance.soldierAvailable = !GameManager.Instance.soldierAvailable;
 					break;
 				case "Mayor":
-					mayorAvailable = !mayorAvailable;
+					GameManager.Instance.mayorAvailable = !GameManager.Instance.mayorAvailable;
 					break;
 				default:
 					Debug.LogWarning("Role not found: " + roleName);
@@ -165,98 +120,85 @@ public class CharacterManager : MonoBehaviour
 	public void SelectAll()
 	{
 		SelectAllHit = true;
-		impAvailable = true;
-		impToggle.isOn = true;
-		poisonerAvailable = true;
-		poisonerToggle.isOn = true;
-		spyAvailable = true;
-		spyToggle.isOn = true;
-		scarletWomanAvailable = true;
-		scarletWomanToggle.isOn = true;
-		baronAvailable = true;
-		baronToggle.isOn = true;
-		butlerAvailable = true;
-		butlerToggle.isOn = true;
-		recluseAvailable = true;
-		recluseToggle.isOn = true;
-		drunkAvailable = true;
-		drunkToggle.isOn = true;
-		saintAvailable = true;
-		saintToggle.isOn = true;
-		washerwomanAvailable = true;
-		washerwomanToggle.isOn = true;
-		librarianAvailable = true;
-		librarianToggle.isOn = true;
-		investigatorAvailable = true;
-		investigatorToggle.isOn = true;
-		chefAvailable = true;
-		chefToggle.isOn = true;
-		empathAvailable = true;
-		empathToggle.isOn = true;
-		fortuneTellerAvailable = true;
-		fortuneTellerToggle.isOn = true;
-		undertakerAvailable = true;
-		undertakerToggle.isOn = true;
-		monkAvailable = true;
-		monkToggle.isOn = true;
-		ravenkeeperAvailable = true;
-		ravenkeeperToggle.isOn = true;
-		virginAvailable = true;
-		virginToggle.isOn = true;
-		slayerAvailable = true;
-		slayerToggle.isOn = true;
-		soldierAvailable = true;
-		soldierToggle.isOn = true;
-		mayorAvailable = true;
-		mayorToggle.isOn = true;
+
+		GameManager.Instance.impAvailable = impToggle.isOn = true;
+		GameManager.Instance.poisonerAvailable = poisonerToggle.isOn = true;
+		GameManager.Instance.spyAvailable = spyToggle.isOn = true;
+		GameManager.Instance.scarletWomanAvailable = scarletWomanToggle.isOn = true;
+		GameManager.Instance.baronAvailable = baronToggle.isOn = true;
+		GameManager.Instance.butlerAvailable = butlerToggle.isOn = true;
+		GameManager.Instance.recluseAvailable = recluseToggle.isOn = true;
+		GameManager.Instance.drunkAvailable = drunkToggle.isOn = true;
+		GameManager.Instance.saintAvailable = saintToggle.isOn = true;
+		GameManager.Instance.washerwomanAvailable = washerwomanToggle.isOn = true;
+		GameManager.Instance.librarianAvailable = librarianToggle.isOn = true;
+		GameManager.Instance.investigatorAvailable = investigatorToggle.isOn = true;
+		GameManager.Instance.chefAvailable = chefToggle.isOn = true;
+		GameManager.Instance.empathAvailable = empathToggle.isOn = true;
+		GameManager.Instance.fortuneTellerAvailable = fortuneTellerToggle.isOn = true;
+		GameManager.Instance.undertakerAvailable = undertakerToggle.isOn = true;
+		GameManager.Instance.monkAvailable = monkToggle.isOn = true;
+		GameManager.Instance.ravenkeeperAvailable = ravenkeeperToggle.isOn = true;
+		GameManager.Instance.virginAvailable = virginToggle.isOn = true;
+		GameManager.Instance.slayerAvailable = slayerToggle.isOn = true;
+		GameManager.Instance.soldierAvailable = soldierToggle.isOn = true;
+		GameManager.Instance.mayorAvailable = mayorToggle.isOn = true;
+
 		SelectAllHit = false;
 	}
 
 	public void DeselectAll()
 	{
 		SelectAllHit = true;
-		poisonerAvailable = false;
-		poisonerToggle.isOn = false;
-		spyAvailable = false;
-		spyToggle.isOn = false;
-		scarletWomanAvailable = false;
-		scarletWomanToggle.isOn = false;
-		baronAvailable = false;
-		baronToggle.isOn = false;
-		butlerAvailable = false;
-		butlerToggle.isOn = false;
-		recluseAvailable = false;
-		recluseToggle.isOn = false;
-		drunkAvailable = false;
-		drunkToggle.isOn = false;
-		saintAvailable = false;
-		saintToggle.isOn = false;
-		washerwomanAvailable = false;
-		washerwomanToggle.isOn = false;
-		librarianAvailable = false;
-		librarianToggle.isOn = false;
-		investigatorAvailable = false;
-		investigatorToggle.isOn = false;
-		chefAvailable = false;
-		chefToggle.isOn = false;
-		empathAvailable = false;
-		empathToggle.isOn = false;
-		fortuneTellerAvailable = false;
-		fortuneTellerToggle.isOn = false;
-		undertakerAvailable = false;
-		undertakerToggle.isOn = false;
-		monkAvailable = false;
-		monkToggle.isOn = false;
-		ravenkeeperAvailable = false;
-		ravenkeeperToggle.isOn = false;
-		virginAvailable = false;
-		virginToggle.isOn = false;
-		slayerAvailable = false;
-		slayerToggle.isOn = false;
-		soldierAvailable = false;
-		soldierToggle.isOn = false;
-		mayorAvailable = false;
-		mayorToggle.isOn = false;
+
+		GameManager.Instance.impAvailable = impToggle.isOn = true;
+		GameManager.Instance.poisonerAvailable = poisonerToggle.isOn = false;
+		GameManager.Instance.spyAvailable = spyToggle.isOn = false;
+		GameManager.Instance.scarletWomanAvailable = scarletWomanToggle.isOn = false;
+		GameManager.Instance.baronAvailable = baronToggle.isOn = false;
+		GameManager.Instance.butlerAvailable = butlerToggle.isOn = false;
+		GameManager.Instance.recluseAvailable = recluseToggle.isOn = false;
+		GameManager.Instance.drunkAvailable = drunkToggle.isOn = false;
+		GameManager.Instance.saintAvailable = saintToggle.isOn = false;
+		GameManager.Instance.washerwomanAvailable = washerwomanToggle.isOn = false;
+		GameManager.Instance.librarianAvailable = librarianToggle.isOn = false;
+		GameManager.Instance.investigatorAvailable = investigatorToggle.isOn = false;
+		GameManager.Instance.chefAvailable = chefToggle.isOn = false;
+		GameManager.Instance.empathAvailable = empathToggle.isOn = false;
+		GameManager.Instance.fortuneTellerAvailable = fortuneTellerToggle.isOn = false;
+		GameManager.Instance.undertakerAvailable = undertakerToggle.isOn = false;
+		GameManager.Instance.monkAvailable = monkToggle.isOn = false;
+		GameManager.Instance.ravenkeeperAvailable = ravenkeeperToggle.isOn = false;
+		GameManager.Instance.virginAvailable = virginToggle.isOn = false;
+		GameManager.Instance.slayerAvailable = slayerToggle.isOn = false;
+		GameManager.Instance.soldierAvailable = soldierToggle.isOn = false;
+		GameManager.Instance.mayorAvailable = mayorToggle.isOn = false;
+
 		SelectAllHit = false;
+	}
+
+	public void DoneSelecting()
+	{
+		print("RUNNING");
+		//Calls a function to populate a list with true false values parallel to the CharacterRoles list in Gamemanager
+		GameManager.Instance.UpdateAvailableRolesList();
+
+		//Because CharacterRoles and AvailableRoles are parallel, we can say that if available roles [i] is true, we add character roles [i] to this scripts usable roles.
+		//for example if available role[1] is the impAvailable and is true, then add imp to the availableRoles here.
+		for(int i = 0; i < GameManager.Instance.characterRoles.Count; i++)
+		{
+			if (GameManager.Instance.availableRoles[i] == true)
+			{
+				print("DID ADD: " + GameManager.Instance.characterRoles[i].characterName);
+				AvailableRoles.Add(GameManager.Instance.characterRoles[i]);
+			}
+			else
+			{
+				print("DID NOT ADD ROLE: " + GameManager.Instance.characterRoles[i].characterName);
+			}
+		}
+
+		GameManager.Instance.characterRolesInCurrentGame = AvailableRoles;
+		// Repeat as needed for other roles or use the ordered list from CharacterLibrary if you'd like to loop
 	}
 }
