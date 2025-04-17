@@ -62,6 +62,12 @@ public class NightOne : MonoBehaviour
 			infoText.text = "";
 			Chef();
 		}
+		else
+		if (currentRole == "chef")
+		{
+			infoText.text = "";
+			Empath();
+		}
 	}
 
 
@@ -225,7 +231,7 @@ public class NightOne : MonoBehaviour
 	public void Chef()
 	{
 		currentRole = "chef";
-		gameText.text = "investigator do ur thing";
+		gameText.text = "chef do ur thing";
 		//Shows 0, 1, 2, etc for # of evil players sitting next to each other (counts first and last position as sitting next to each other
 		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
 		int chefCounter = 0;
@@ -249,6 +255,45 @@ public class NightOne : MonoBehaviour
 		{
 			infoText.text += "There are " + chefCounter.ToString() + " pairs of evil players sitting next to each other.";
 		}
+	}
 
+	public void Empath()
+	{
+		//Shows 0, 1, 2, etc for # of evil players sitting next to empath
+		//don't need to skip dead players cause night 1
+		currentRole = "empath";
+		gameText.text = "empath do ur thing";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		int empathCounter = 0;
+		for (int i = 0; i < allPlayers.Count; i++)
+		{
+			Player current = allPlayers[i]; //i is the current index starting at 0
+			Player next = allPlayers[(i + 1) % allPlayers.Count];
+			Player minusone = allPlayers[(i - 1 + allPlayers.Count) % allPlayers.Count];
+			bool currentisEmpath = current.characterName == "Empath";
+			bool nextIsEvil = next.alignment == CharacterLibrary.Alignment.Minion || next.alignment == CharacterLibrary.Alignment.Demon;
+			bool minusoneIsEvil = minusone.alignment == CharacterLibrary.Alignment.Minion || next.alignment == CharacterLibrary.Alignment.Demon;
+
+			if (minusoneIsEvil|| nextIsEvil)
+			{
+				empathCounter++;
+			}
+
+
+			if (currentisEmpath) 
+			{
+				Debug.Log(current.playerName.ToString() + " is the Empath."); 
+				Debug.Log(minusone.playerName.ToString() + " is " + (minusone.alignment.ToString()) + " and is 1 before empath"); 
+				Debug.Log(next.playerName.ToString() + " is " +  (next.alignment.ToString()) +  " and is 1 after empath"); 
+				if (empathCounter == 1)
+				{
+					infoText.text += "There is one evil player sitting next to you.";
+				}
+				else
+				{
+					infoText.text += "There are " + empathCounter.ToString() + " evil players sitting next to you.";
+				}
+			}
+		}
 	}
 }

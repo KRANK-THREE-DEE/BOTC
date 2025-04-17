@@ -50,19 +50,15 @@ public class PlayerOrderManager : MonoBehaviour
 
 
 	//methods that GPT added that i'll maybe probably need??
-	public static Player GetNextPlayer(string currentPlayer)
+	public static Player GetNextPlayer(string currentPlayer) //the Player after static tells code to give me a Player
 	{
-		int index = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer);
-		if (index == -1 || GameManager.Instance.playerOrder.Count == 0) return null;
-
-		return GameManager.Instance.playerOrder[(index + 1) % GameManager.Instance.playerOrder.Count];
+		int x = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer); //set x equal to ????
+		return GameManager.Instance.playerOrder[(x + 1) % GameManager.Instance.playerOrder.Count];
 	}
 
 	public static Player GetPreviousPlayer(string currentPlayer)
 	{
-		int index = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer);
-		if (index == -1 || GameManager.Instance.playerOrder.Count == 0) return null;
-
-		return GameManager.Instance.playerOrder[(index - 1 + GameManager.Instance.playerOrder.Count) % GameManager.Instance.playerOrder.Count]; // Wrap around backward
+		int x2 = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer);
+		return GameManager.Instance.playerOrder[(x2 - 1 + GameManager.Instance.playerOrder.Count) % GameManager.Instance.playerOrder.Count]; // Wrap around backward
 	}
 }
