@@ -50,6 +50,18 @@ public class NightOne : MonoBehaviour
 			infoText.text = "";
 			Librarian();
 		}
+		else
+			if (currentRole == "librarian")
+		{
+			infoText.text = "";
+			Investigator();
+		}
+		else
+		if (currentRole == "investigator")
+		{
+			infoText.text = "";
+			Chef();
+		}
 	}
 
 
@@ -177,6 +189,65 @@ public class NightOne : MonoBehaviour
 			print("Selected Outsider: " + selectedOutsider.playerName + " is the " + selectedOutsider.characterName);
 			print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
 			infoText.text += "Either " + selectedOutsider.playerName + " or " + selectedRandom.playerName + " is the " + selectedOutsider.characterName + ".";
+		}
+
+	}
+
+	public void Investigator()
+	{
+		currentRole = "investigator";
+		gameText.text = "investigator do ur thing";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allMinions = new List<Player>();
+		foreach (Player x in allPlayers)
+		{
+			if (x.alignment == CharacterLibrary.Alignment.Minion)
+			{
+				allMinions.Add(x);
+			}
+		}
+		int random = Random.Range(0, allMinions.Count);
+		Player selectedMinion = allMinions[random];
+		int random2 = Random.Range(0, allPlayers.Count);
+		Player selectedRandom = allPlayers[random2];
+		while (selectedMinion == selectedRandom || selectedRandom.characterName == "Washerwoman" || selectedMinion.characterName == "Washerwoman")
+		{
+			random = Random.Range(0, allMinions.Count);
+			selectedMinion = allMinions[random];
+			random2 = Random.Range(0, allPlayers.Count);
+			selectedRandom = allPlayers[random2];
+		}
+		print("Selected Town: " + selectedMinion.playerName + " is the " + selectedMinion.characterName);
+		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
+		infoText.text += "Either " + selectedMinion.playerName + " or " + selectedRandom.playerName + " is the " + selectedMinion.characterName + ".";
+	}
+
+	public void Chef()
+	{
+		currentRole = "chef";
+		gameText.text = "investigator do ur thing";
+		//Shows 0, 1, 2, etc for # of evil players sitting next to each other (counts first and last position as sitting next to each other
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		int chefCounter = 0;
+		for (int i = 0; i < allPlayers.Count; i++)
+		{
+			Player current = allPlayers[i]; //i is the current index starting at 0
+			Player next = allPlayers[(i + 1) % allPlayers.Count]; // wrap around using %
+			bool currentIsEvil = current.alignment == CharacterLibrary.Alignment.Minion || current.alignment == CharacterLibrary.Alignment.Demon;
+			bool nextIsEvil = next.alignment == CharacterLibrary.Alignment.Minion || next.alignment == CharacterLibrary.Alignment.Demon;
+
+			if (currentIsEvil && nextIsEvil)
+			{
+				chefCounter++;
+			}
+		}
+		if (chefCounter == 1)
+		{
+			infoText.text += "There is " + chefCounter.ToString() + " pair of evil players sitting next to each other.";
+		}
+		else
+		{
+			infoText.text += "There are " + chefCounter.ToString() + " pairs of evil players sitting next to each other.";
 		}
 
 	}
