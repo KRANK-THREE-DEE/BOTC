@@ -20,7 +20,6 @@ public class AssignCharacters : MonoBehaviour
 	private List<Player> players = new List<Player>();
 
 
-	// Start is called before the first frame update
 	void Start()
 	{
 		//allTownsfolkRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.townsfolkRoles);
