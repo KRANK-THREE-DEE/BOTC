@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
+using System.Data;
 
 public class ToggleListPopulator : MonoBehaviour
 {
 	public GameObject togglePrefab;
 	public Transform contentParent;
 
-	// Store toggle and player reference
 	private List<Toggle> toggleList = new List<Toggle>();
+	private NightOne nightOneScript;
 
 	void Start()
 	{
+		nightOneScript = GetComponent<NightOne>();
 		PopulateToggleList();
 	}
 
@@ -36,23 +37,55 @@ public class ToggleListPopulator : MonoBehaviour
 				label.text = GameManager.Instance.playerOrder[i].playerName;
 			}
 
+			// Add the onValueChanged listener
+			int index = i; 
+			toggle.onValueChanged.AddListener((isOn) => OnToggleChanged(toggle, isOn, index)); //tells toggles to run OnToggleChanged when toggled
+
 			toggleList.Add(toggle);
 		}
 	}
 
-	// Call from done button
+	void OnToggleChanged(Toggle changedToggle, bool isOn, int index) //used to keep poisoner from selecting multiple people
+	{
+		if (nightOneScript.currentRole == "poisoner" && isOn)
+		{
+			// Only allow one toggle
+			foreach (var toggle in toggleList)
+			{
+				if (toggle != changedToggle)
+				{
+					toggle.isOn = false;
+				}
+			}
+		}
+		else if (nightOneScript.currentRole == "fortuneteller")
+		{
+			int activeCount = 0;
+			foreach (var toggle in toggleList)
+			{
+				if (toggle.isOn) activeCount++;
+			}
+
+			// If this makes 3 toggles on, turn it back off
+			if (activeCount > 2)
+			{
+				changedToggle.isOn = false;
+			}
+		}
+	}
+
 	public void OnConfirmSelection()
 	{
-		NightOne nightOneScript = GetComponent<NightOne>(); // since both are on the same object
 		string selectedName = "";
 		string selectedName2 = "";
 		int selectedNameIndex = 0;
 		int selectedNameIndex2 = 0;
-		for (int i = 0; i < toggleList.Count; i++) 
+
+		for (int i = 0; i < toggleList.Count; i++)
 		{
 			if (toggleList[i].isOn)
 			{
-				if(selectedName == "")
+				if (selectedName == "")
 				{
 					selectedName = GameManager.Instance.playerOrder[i].playerName;
 					selectedNameIndex = i;
@@ -64,26 +97,26 @@ public class ToggleListPopulator : MonoBehaviour
 				}
 			}
 		}
+
 		if (nightOneScript.currentRole == "poisoner")
 		{
-			Debug.Log("Poisoner selected: " + selectedName);
-			Player selectedPlayer = GameManager.Instance.playerOrder[selectedNameIndex];
-			selectedPlayer.isPoisoned = true;
-
-			Debug.Log($"{selectedPlayer.playerName} has been poisoned!");
-			selectedName = "";
-			selectedName2 = "";
+			if (selectedName != "")
+			{
+				Debug.Log("Poisoner selected: " + selectedName);
+				Player selectedPlayer = GameManager.Instance.playerOrder[selectedNameIndex];
+				selectedPlayer.isPoisoned = true;
+				Debug.Log($"{selectedPlayer.playerName} has been poisoned!");
+			}
 		}
-		else
-		if (nightOneScript.currentRole == "fortuneteller")
+		else if (nightOneScript.currentRole == "fortuneteller")
 		{
 			if (selectedName != "" && selectedName2 != "")
 			{
 				Player selectedPlayer = GameManager.Instance.playerOrder[selectedNameIndex];
 				Player selectedPlayer2 = GameManager.Instance.playerOrder[selectedNameIndex2];
-				Debug.Log("FT pick 1 is " + selectedPlayer.playerName.ToString() + ", who is a " + selectedPlayer.alignment.ToString());
-				Debug.Log("FT pick 2 is " + selectedPlayer2.playerName.ToString() + ", who is a " + selectedPlayer2.alignment.ToString());
-				if (selectedPlayer.alignment == CharacterLibrary.Alignment.Demon || (selectedPlayer2.alignment == CharacterLibrary.Alignment.Demon))
+				Debug.Log("FT pick 1 is " + selectedPlayer.playerName + ", who is a " + selectedPlayer.alignment);
+				Debug.Log("FT pick 2 is " + selectedPlayer2.playerName + ", who is a " + selectedPlayer2.alignment);
+				if (selectedPlayer.alignment == CharacterLibrary.Alignment.Demon || selectedPlayer2.alignment == CharacterLibrary.Alignment.Demon)
 				{
 					Debug.Log("Yes.");
 				}
@@ -94,7 +127,7 @@ public class ToggleListPopulator : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("FT needs to pick 2 people."); //works!
+				Debug.Log("FT needs to pick 2 people.");
 			}
 		}
 	}
