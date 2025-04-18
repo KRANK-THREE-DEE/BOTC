@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Data;
+using JetBrains.Annotations;
 
 public class ToggleListPopulator : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ToggleListPopulator : MonoBehaviour
 
 	private List<Toggle> toggleList = new List<Toggle>();
 	private NightOne nightOneScript;
+
+
 
 	void Start()
 	{
@@ -47,7 +50,7 @@ public class ToggleListPopulator : MonoBehaviour
 
 	void OnToggleChanged(Toggle changedToggle, bool isOn, int index) //used to keep poisoner from selecting multiple people
 	{
-		if (nightOneScript.currentRole == "poisoner" && isOn)
+		if (nightOneScript.currentRole == "poisoner" && isOn || nightOneScript.currentRole == "butler" && isOn)
 		{
 			// Only allow one toggle
 			foreach (var toggle in toggleList)
@@ -129,6 +132,22 @@ public class ToggleListPopulator : MonoBehaviour
 			{
 				Debug.Log("FT needs to pick 2 people.");
 			}
+		}
+		else
+		if (nightOneScript.currentRole == "butler")
+		{
+			if (selectedName != "")
+			{
+				Debug.Log("Butler selected: " + selectedName);
+				Player selectedPlayer = GameManager.Instance.playerOrder[selectedNameIndex];
+				selectedPlayer.isMaster = true;
+				Debug.Log($"{selectedPlayer.playerName} has been chosen by Butler!");
+				nightOneScript.butlerDone = true;
+			}
+		}
+		foreach (var toggle in toggleList)
+		{
+			toggle.isOn = false;
 		}
 	}
 }

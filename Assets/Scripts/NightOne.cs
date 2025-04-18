@@ -18,6 +18,8 @@ public class NightOne : MonoBehaviour
 	public GameObject offscreenLocation;
 	public GameObject onscreenLocation;
 
+	public bool butlerDone;
+
 
 
 	void Start()
@@ -36,8 +38,6 @@ public class NightOne : MonoBehaviour
 		print("RUNNING");
 		if (currentRole == "poisoner")
 		{
-			//get which box was clicked
-			//activate bool isPoisoned
 			Scroll.transform.position = offscreenLocation.transform.position;
 			Spy();
 		}
@@ -75,6 +75,17 @@ public class NightOne : MonoBehaviour
 			infoText.text = "";
 			Scroll.transform.position = onscreenLocation.transform.position;
 			FortuneTeller();
+		}
+		if (currentRole == "fortuneteller")
+		{
+			Butler();
+		}
+		if (currentRole == "butler")
+		{
+			if(butlerDone == true)
+			{
+				Debug.Log("GOOD MORNING");
+			}
 		}
 	}
 
@@ -310,5 +321,11 @@ public class NightOne : MonoBehaviour
 		currentRole = "fortuneteller";
 		gameText.text = "fortune teller do ur thing";
 		infoText.gameObject.transform.position = offscreenLocation.transform.position;
+	}
+
+	public void Butler()
+	{
+		currentRole = "butler";
+		gameText.text = "butler do ur thing";
 	}
 }

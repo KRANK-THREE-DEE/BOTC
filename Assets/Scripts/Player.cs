@@ -11,6 +11,7 @@ public class Player
 	public string characterName;
 	public CharacterLibrary.Alignment alignment;
 	public bool isPoisoned;
+	public bool isMaster;
 
 	public Player()
 	{
@@ -18,6 +19,7 @@ public class Player
 		characterName = string.Empty;
 		alignment = CharacterLibrary.Alignment.Townsfolk;
 		isPoisoned = false;
+		isMaster = false;
 	}
 
 	public Player(string name, string characterName = "Unknown", CharacterLibrary.Alignment alignment = CharacterLibrary.Alignment.Townsfolk)
