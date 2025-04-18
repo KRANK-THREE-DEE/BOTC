@@ -1063,6 +1063,7 @@ MonoBehaviour:
   currentRole: 
   RoleManager: {fileID: 625088454}
   roleList: []
+  townsfolkInPlay: []
   Scroll: {fileID: 1060852231}
   infoText: {fileID: 758344036}
   offscreenLocation: {fileID: 1664094268}
@@ -1936,6 +1937,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1267673247}
+        m_TargetAssemblyTypeName: ToggleListPopulator, Assembly-CSharp
+        m_MethodName: OnConfirmSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1267673245}
         m_TargetAssemblyTypeName: NightOne, Assembly-CSharp
         m_MethodName: ChangeRole

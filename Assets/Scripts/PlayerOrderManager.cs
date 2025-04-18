@@ -47,18 +47,4 @@ public class PlayerOrderManager : MonoBehaviour
 		GameManager.Instance.playerOrder.RemoveAt(GameManager.Instance.playerOrder.Count - 1);
 		UpdatePlayerList();
 	}
-
-
-	//methods that GPT added that i'll maybe probably need??
-	public static Player GetNextPlayer(string currentPlayer) //the Player after static tells code to give me a Player
-	{
-		int x = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer); //set x equal to ????
-		return GameManager.Instance.playerOrder[(x + 1) % GameManager.Instance.playerOrder.Count];
-	}
-
-	public static Player GetPreviousPlayer(string currentPlayer)
-	{
-		int x2 = GameManager.Instance.playerOrder.FindIndex(p => p.playerName == currentPlayer);
-		return GameManager.Instance.playerOrder[(x2 - 1 + GameManager.Instance.playerOrder.Count) % GameManager.Instance.playerOrder.Count]; // Wrap around backward
-	}
 }

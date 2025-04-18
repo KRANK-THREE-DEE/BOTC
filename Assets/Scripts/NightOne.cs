@@ -18,6 +18,8 @@ public class NightOne : MonoBehaviour
 	public GameObject offscreenLocation;
 	public GameObject onscreenLocation;
 
+
+
 	void Start()
 	{
 		Scroll.transform.position = offscreenLocation.transform.position;
@@ -34,14 +36,14 @@ public class NightOne : MonoBehaviour
 		print("RUNNING");
 		if (currentRole == "poisoner")
 		{
-			Debug.Log("THE CURRENT ROLE IS " + currentRole);  
+			//get which box was clicked
+			//activate bool isPoisoned
 			Scroll.transform.position = offscreenLocation.transform.position;
 			Spy();
 		}
 		else
 		if (currentRole == "spy")
 		{
-			Debug.Log("THE CURRENT ROLE IS " + currentRole);  
 			Washerwoman(); 
 		}
 		else 
@@ -67,6 +69,12 @@ public class NightOne : MonoBehaviour
 		{
 			infoText.text = "";
 			Empath();
+		}
+		if (currentRole == "empath")
+		{
+			infoText.text = "";
+			Scroll.transform.position = onscreenLocation.transform.position;
+			FortuneTeller();
 		}
 	}
 
@@ -295,5 +303,12 @@ public class NightOne : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void FortuneTeller()
+	{
+		currentRole = "fortuneteller";
+		gameText.text = "fortune teller do ur thing";
+		infoText.gameObject.transform.position = offscreenLocation.transform.position;
 	}
 }
