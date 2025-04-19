@@ -112,6 +112,14 @@ public class NightOne : MonoBehaviour
 	{
 		gameText.text = "minions do ur thing (big game)";
 		Debug.Log($"Started at {Time.time}");
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		foreach (Player x in allPlayers)
+		{
+			if (x.alignment == CharacterLibrary.Alignment.Demon)
+			{
+				gameText.text = x.playerName.ToString() + " is the demon.";
+			}
+		}
 		yield return new WaitForSeconds(5);
 		Debug.Log($"Ended at {Time.time}");
 		//whatever thing has minions sleep here.
@@ -123,11 +131,20 @@ public class NightOne : MonoBehaviour
 		gameText.text = "demon do ur thing (big game)";
 		//whatever thing has minions stick thumb out (or jackbox jus showing names on phone)
 		Debug.Log($"Started at {Time.time}");
+		gameText.text = "Minions: ";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		foreach (Player x in allPlayers)
+		{
+			if (x.alignment == CharacterLibrary.Alignment.Minion)
+			{
+				gameText.text +=  x.playerName.ToString() + " ";
+			}
+		}
 		yield return new WaitForSeconds(5);
 		Debug.Log($"Ended at {Time.time}");
 		gameText.text = "Timer done.";
 		//minions put thumbs down
-		//demon sees 3 not in play roles to bluff as
+		//demon sees 3 good not in play roles to bluff as
 		//whatever thing has demons sleep here.
 		Poisoner();
 	}
