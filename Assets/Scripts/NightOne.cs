@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using static CharacterLibrary;
 
 public class NightOne : MonoBehaviour
 {
@@ -68,18 +69,22 @@ public class NightOne : MonoBehaviour
 		if (currentRole == "chef")
 		{
 			infoText.text = "";
+			infoText.gameObject.transform.position = onscreenLocation.transform.position;
 			Empath();
 		}
+		else
 		if (currentRole == "empath")
 		{
 			infoText.text = "";
 			Scroll.transform.position = onscreenLocation.transform.position;
 			FortuneTeller();
 		}
+		else
 		if (currentRole == "fortuneteller")
 		{
 			Butler();
 		}
+		else
 		if (currentRole == "butler")
 		{
 			if(butlerDone == true)
@@ -296,41 +301,55 @@ public class NightOne : MonoBehaviour
 
 	public void Empath()
 	{
+		int currentisEmpath = 0;
 		//Shows 0, 1, 2, etc for # of evil players sitting next to empath
 		//don't need to skip dead players cause night 1
 		currentRole = "empath";
 		gameText.text = "empath do ur thing";
 		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
 		int empathCounter = 0;
-		for (int i = 0; i < allPlayers.Count; i++)
+
+		for(int i = 0; i < allPlayers.Count; i++)
 		{
-			Player current = allPlayers[i]; //i is the current index starting at 0
-			Player next = allPlayers[(i + 1) % allPlayers.Count];
-			Player minusone = allPlayers[(i - 1 + allPlayers.Count) % allPlayers.Count];
-			bool currentisEmpath = current.characterName == "Empath";
-			bool nextIsEvil = next.alignment == CharacterLibrary.Alignment.Minion || next.alignment == CharacterLibrary.Alignment.Demon;
-			bool minusoneIsEvil = minusone.alignment == CharacterLibrary.Alignment.Minion || next.alignment == CharacterLibrary.Alignment.Demon;
-
-			if (minusoneIsEvil|| nextIsEvil)
+			if (allPlayers[i].characterName.ToLower() == "empath")
 			{
-				empathCounter++;
+				currentisEmpath = i;
 			}
+		}
+		Debug.Log(allPlayers[currentisEmpath].ToString() + " is the Empath.");
+
+		Debug.Log(allPlayers[(currentisEmpath - 1 + allPlayers.Count) % allPlayers.Count].characterName +
+			" is " + allPlayers[(currentisEmpath - 1 + allPlayers.Count) % allPlayers.Count].alignment +
+			" and is 1 before empath");
+
+		Debug.Log(allPlayers[(currentisEmpath + 1) % allPlayers.Count].characterName +
+			" is " + allPlayers[(currentisEmpath + 1) % allPlayers.Count].alignment +
+			" and is 1 after empath");
 
 
-			if (currentisEmpath) 
-			{
-				Debug.Log(current.playerName.ToString() + " is the Empath."); 
-				Debug.Log(minusone.playerName.ToString() + " is " + (minusone.alignment.ToString()) + " and is 1 before empath"); 
-				Debug.Log(next.playerName.ToString() + " is " +  (next.alignment.ToString()) +  " and is 1 after empath"); 
-				if (empathCounter == 1)
-				{
-					infoText.text += "There is one evil player sitting next to you.";
-				}
-				else
-				{
-					infoText.text += "There are " + empathCounter.ToString() + " evil players sitting next to you.";
-				}
-			}
+		int beforeIndex = (currentisEmpath - 1 + allPlayers.Count) % allPlayers.Count;
+		int afterIndex = (currentisEmpath + 1) % allPlayers.Count;
+
+		if (allPlayers[beforeIndex].alignment == CharacterLibrary.Alignment.Demon ||
+			allPlayers[beforeIndex].alignment == CharacterLibrary.Alignment.Minion)
+		{
+			empathCounter++;
+		}
+
+		if (allPlayers[afterIndex].alignment == CharacterLibrary.Alignment.Demon ||
+			allPlayers[afterIndex].alignment == CharacterLibrary.Alignment.Minion)
+		{
+			empathCounter++;
+		}
+
+
+		if (empathCounter == 1)
+		{
+			infoText.text += "There is one evil player sitting next to you.";
+		}
+		else
+		{
+			infoText.text += "There are " + empathCounter.ToString() + " evil players sitting next to you.";
 		}
 	}
 
@@ -338,7 +357,7 @@ public class NightOne : MonoBehaviour
 	{
 		currentRole = "fortuneteller";
 		gameText.text = "fortune teller do ur thing";
-		infoText.gameObject.transform.position = offscreenLocation.transform.position;
+
 	}
 
 	public void Butler()
