@@ -97,6 +97,14 @@ public class GameManager : Singleton<GameManager>
 		GameManager.Instance.availableRoles.Add(GameManager.Instance.slayerAvailable);
 		GameManager.Instance.availableRoles.Add(GameManager.Instance.soldierAvailable);
 		GameManager.Instance.availableRoles.Add(GameManager.Instance.mayorAvailable);
+
+		for(int i = 0; i < availableRoles.Count; i++)
+		{
+			if (availableRoles[i] == true)
+			{
+				characterRolesInCurrentGame.Add(characterRoles[i]);
+			}
+		}
 	}
 
 }

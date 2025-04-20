@@ -1688,7 +1688,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 475524108}
         m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
-        m_MethodName: DoneSelecting
+        m_MethodName: CallGameManagerFunction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -140,11 +140,12 @@ public class NightOne : MonoBehaviour
 				gameText.text +=  x.playerName.ToString() + " ";
 			}
 		}
+		gameText.text = "Bluffs: ";
 		yield return new WaitForSeconds(5);
 		Debug.Log($"Ended at {Time.time}");
 		gameText.text = "Timer done.";
 		//minions put thumbs down
-		//demon sees 3 good not in play roles to bluff as
+		//demon sees 3 good-aligned roles that no one has been assigned
 		//whatever thing has demons sleep here.
 		Poisoner();
 	}

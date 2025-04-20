@@ -31,91 +31,95 @@ public class CharacterManager : MonoBehaviour
 	public bool SelectAllHit;
 	public List<CharacterLibrary.CharacterRole> AvailableRoles = new List<CharacterLibrary.CharacterRole>();
 
-	private void Start()
+
+	public void CallGameManagerFunction()
 	{
-
+		GameManager.Instance.UpdateAvailableRolesList();
 	}
-
 	public void ToggleCharacter(GameObject thisObject)
 	{
 		string roleName = thisObject.GetComponentInChildren<Text>().text;
 
 		if (SelectAllHit == false)
 		{
+			bool newState = false;
+
 			switch (roleName)
 			{
 				case "Imp":
-					GameManager.Instance.impAvailable = !GameManager.Instance.impAvailable;
+					GameManager.Instance.impAvailable = newState = !GameManager.Instance.impAvailable;
 					break;
 				case "Poisoner":
-					GameManager.Instance.poisonerAvailable = !GameManager.Instance.poisonerAvailable;
+					GameManager.Instance.poisonerAvailable = newState = !GameManager.Instance.poisonerAvailable;
 					break;
 				case "Spy":
-					GameManager.Instance.spyAvailable = !GameManager.Instance.spyAvailable;
+					GameManager.Instance.spyAvailable = newState = !GameManager.Instance.spyAvailable;
 					break;
 				case "Scarlet Woman":
-					GameManager.Instance.scarletWomanAvailable = !GameManager.Instance.scarletWomanAvailable;
+					GameManager.Instance.scarletWomanAvailable = newState = !GameManager.Instance.scarletWomanAvailable;
 					break;
 				case "Baron":
-					GameManager.Instance.baronAvailable = !GameManager.Instance.baronAvailable;
+					GameManager.Instance.baronAvailable = newState = !GameManager.Instance.baronAvailable;
 					break;
 				case "Butler":
-					GameManager.Instance.butlerAvailable = !GameManager.Instance.butlerAvailable;
+					GameManager.Instance.butlerAvailable = newState = !GameManager.Instance.butlerAvailable;
 					break;
 				case "Recluse":
-					GameManager.Instance.recluseAvailable = !GameManager.Instance.recluseAvailable;
+					GameManager.Instance.recluseAvailable = newState = !GameManager.Instance.recluseAvailable;
 					break;
 				case "Drunk":
-					GameManager.Instance.drunkAvailable = !GameManager.Instance.drunkAvailable;
+					GameManager.Instance.drunkAvailable = newState = !GameManager.Instance.drunkAvailable;
 					break;
 				case "Saint":
-					GameManager.Instance.saintAvailable = !GameManager.Instance.saintAvailable;
+					GameManager.Instance.saintAvailable = newState = !GameManager.Instance.saintAvailable;
 					break;
 				case "Washerwoman":
-					GameManager.Instance.washerwomanAvailable = !GameManager.Instance.washerwomanAvailable;
+					GameManager.Instance.washerwomanAvailable = newState = !GameManager.Instance.washerwomanAvailable;
 					break;
 				case "Librarian":
-					GameManager.Instance.librarianAvailable = !GameManager.Instance.librarianAvailable;
+					GameManager.Instance.librarianAvailable = newState = !GameManager.Instance.librarianAvailable;
 					break;
 				case "Investigator":
-					GameManager.Instance.investigatorAvailable = !GameManager.Instance.investigatorAvailable;
+					GameManager.Instance.investigatorAvailable = newState = !GameManager.Instance.investigatorAvailable;
 					break;
 				case "Chef":
-					GameManager.Instance.chefAvailable = !GameManager.Instance.chefAvailable;
+					GameManager.Instance.chefAvailable = newState = !GameManager.Instance.chefAvailable;
 					break;
 				case "Empath":
-					GameManager.Instance.empathAvailable = !GameManager.Instance.empathAvailable;
+					GameManager.Instance.empathAvailable = newState = !GameManager.Instance.empathAvailable;
 					break;
 				case "Fortune Teller":
-					GameManager.Instance.fortuneTellerAvailable = !GameManager.Instance.fortuneTellerAvailable;
+					GameManager.Instance.fortuneTellerAvailable = newState = !GameManager.Instance.fortuneTellerAvailable;
 					break;
 				case "Undertaker":
-					GameManager.Instance.undertakerAvailable = !GameManager.Instance.undertakerAvailable;
+					GameManager.Instance.undertakerAvailable = newState = !GameManager.Instance.undertakerAvailable;
 					break;
 				case "Monk":
-					GameManager.Instance.monkAvailable = !GameManager.Instance.monkAvailable;
+					GameManager.Instance.monkAvailable = newState = !GameManager.Instance.monkAvailable;
 					break;
 				case "Ravenkeeper":
-					GameManager.Instance.ravenkeeperAvailable = !GameManager.Instance.ravenkeeperAvailable;
+					GameManager.Instance.ravenkeeperAvailable = newState = !GameManager.Instance.ravenkeeperAvailable;
 					break;
 				case "Virgin":
-					GameManager.Instance.virginAvailable = !GameManager.Instance.virginAvailable;
+					GameManager.Instance.virginAvailable = newState = !GameManager.Instance.virginAvailable;
 					break;
 				case "Slayer":
-					GameManager.Instance.slayerAvailable = !GameManager.Instance.slayerAvailable;
+					GameManager.Instance.slayerAvailable = newState = !GameManager.Instance.slayerAvailable;
 					break;
 				case "Soldier":
-					GameManager.Instance.soldierAvailable = !GameManager.Instance.soldierAvailable;
+					GameManager.Instance.soldierAvailable = newState = !GameManager.Instance.soldierAvailable;
 					break;
 				case "Mayor":
-					GameManager.Instance.mayorAvailable = !GameManager.Instance.mayorAvailable;
+					GameManager.Instance.mayorAvailable = newState = !GameManager.Instance.mayorAvailable;
 					break;
 				default:
 					Debug.LogWarning("Role not found: " + roleName);
 					break;
 			}
+
 		}
 	}
+
 
 	public void SelectAll()
 	{
@@ -175,30 +179,5 @@ public class CharacterManager : MonoBehaviour
 		GameManager.Instance.mayorAvailable = mayorToggle.isOn = false;
 
 		SelectAllHit = false;
-	}
-
-	public void DoneSelecting()
-	{
-		print("RUNNING");
-		//Calls a function to populate a list with true false values parallel to the CharacterRoles list in Gamemanager
-		GameManager.Instance.UpdateAvailableRolesList();
-
-		//Because CharacterRoles and AvailableRoles are parallel, we can say that if available roles [i] is true, we add character roles [i] to this scripts usable roles.
-		//for example if available role[1] is the impAvailable and is true, then add imp to the availableRoles here.
-		for(int i = 0; i < GameManager.Instance.characterRoles.Count; i++)
-		{
-			if (GameManager.Instance.availableRoles[i] == true)
-			{
-				print("DID ADD: " + GameManager.Instance.characterRoles[i].characterName);
-				AvailableRoles.Add(GameManager.Instance.characterRoles[i]);
-			}
-			else
-			{
-				print("DID NOT ADD ROLE: " + GameManager.Instance.characterRoles[i].characterName);
-			}
-		}
-
-		GameManager.Instance.characterRolesInCurrentGame = AvailableRoles;
-		// Repeat as needed for other roles or use the ordered list from CharacterLibrary if you'd like to loop
 	}
 }

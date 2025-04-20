@@ -27,8 +27,10 @@ public class AssignCharacters : MonoBehaviour
 		//allMinionRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.minionRoles);
 		//allDemonRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.demonRoles);
 
+		print("STARTING FOR LOOP");
 		for(int i = 0; i < GameManager.Instance.characterRolesInCurrentGame.Count; i++)
 		{
+			print("LOOP: " + i);
 			if (GameManager.Instance.characterRolesInCurrentGame[i].alignment == Alignment.Townsfolk)
 			{
 				allTownsfolkRoles.Add(GameManager.Instance.characterRolesInCurrentGame[i]);
@@ -51,7 +53,7 @@ public class AssignCharacters : MonoBehaviour
 		}
 
 		players = new List<Player>(); // Initialize players list
-
+		GameManager.Instance.UpdateAvailableRolesList();
 		SetCharacterNumber();
 		GivePlayerCharacters();
 		GetAssignedRoleNames();
@@ -62,6 +64,7 @@ public class AssignCharacters : MonoBehaviour
 	}
 
 	// Set the number of characters based on the player count
+
 	public void SetCharacterNumber()
 	{
 		if (GameManager.Instance.playerNumber == 5)
@@ -133,13 +136,14 @@ public class AssignCharacters : MonoBehaviour
 	// Helper method to assign roles
 	private void AssignRoles(List<CharacterLibrary.CharacterRole> roleList, int numberOfRolesToAssign)
 	{
+		
 		for (int i = 0; i < numberOfRolesToAssign; i++)
 		{
 			if (roleList.Count > 0)
 			{
 				int randomIndex = Random.Range(0, roleList.Count);
 				CharacterLibrary.CharacterRole selectedRole = roleList[randomIndex];
-
+				print("Attempting to Assign the: " + selectedRole.characterName);
 
 				// Assign the role to a player
 				if (players[i].characterName == "Unknown")
