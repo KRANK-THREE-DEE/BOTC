@@ -30,5 +30,10 @@ public class ChangeScene : MonoBehaviour
 	{
 		SceneManager.LoadScene("Night1");
 	}
+
+	public void Day()
+	{
+		SceneManager.LoadScene("Day");
+	}
 }
 

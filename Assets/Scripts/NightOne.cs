@@ -22,6 +22,9 @@ public class NightOne : MonoBehaviour
 
 	public bool butlerDone;
 
+	public GameObject DoneButton;
+	//public ChangeScene change;
+
 
 
 	void Start()
@@ -79,21 +82,27 @@ public class NightOne : MonoBehaviour
 		{
 			infoText.text = "";
 			Scroll.transform.position = onscreenLocation.transform.position;
+			infoText.gameObject.transform.position = offscreenLocation.transform.position;
 			FortuneTeller();
 		}
 		else
 		if (currentRole == "fortuneteller")
 		{
+			Scroll.transform.position = onscreenLocation.transform.position;
 			Butler();
 		}
 		else
 		if (currentRole == "butler")
 		{
-			if(butlerDone == true)
+			infoText.text = "";
+			//Scroll.transform.position = onscreenLocation.transform.position;
+			if (butlerDone == true)
 			{
 				Debug.Log("GOOD MORNING");
+				DoneButton.GetComponent<ChangeScene>().Day();
 			}
 		}
+		Debug.Log("current role:" + currentRole.ToString());
 	}
 
 
@@ -162,11 +171,7 @@ public class NightOne : MonoBehaviour
 		Scroll.transform.position = onscreenLocation.transform.position;
 		currentRole = "poisoner";
 		gameText.text = "poisoner do ur thing";
-		//display players on screen (scroll view same as roles earlier)
-		//poisoner chooses one to poison
-		//make that person poisoned
-		//if poisoner role not in game waits random time between 8-15 seconds
-		//poisoner sleeps
+		//method for this is in ToggleListPopulator
 	}
 
 	public void Spy()
@@ -178,6 +183,15 @@ public class NightOne : MonoBehaviour
 		foreach (Player x in allPlayers)
 		{
 			infoText.text += x.playerName.ToString() + " is the " + x.characterName.ToString() + ". \n";
+			if (x.isPoisoned == true)
+			{
+				infoText.text += x.playerName.ToString() + " is poisoned.";
+			}
+			if (x.isMaster ==  true)
+			{
+
+				infoText.text += x.playerName.ToString() + " is the Butler's Master.";
+			}
 		}
 	}
 
@@ -364,6 +378,7 @@ public class NightOne : MonoBehaviour
 	{
 		currentRole = "fortuneteller";
 		gameText.text = "fortune teller do ur thing";
+		//method for this is in ToggleListPopulator
 
 	}
 
@@ -371,5 +386,6 @@ public class NightOne : MonoBehaviour
 	{
 		currentRole = "butler";
 		gameText.text = "butler do ur thing";
+		//method for this is in ToggleListPopulator
 	}
 }

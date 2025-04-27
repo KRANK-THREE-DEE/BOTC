@@ -1069,6 +1069,8 @@ MonoBehaviour:
   offscreenLocation: {fileID: 1664094268}
   onscreenLocation: {fileID: 308979095}
   butlerDone: 0
+  DoneButton: {fileID: 1868283565}
+  change: {fileID: 0}
 --- !u!4 &1267673246
 Transform:
   m_ObjectHideFlags: 0
@@ -1867,6 +1869,7 @@ GameObject:
   - component: {fileID: 1868283569}
   - component: {fileID: 1868283568}
   - component: {fileID: 1868283567}
+  - component: {fileID: 1868283570}
   m_Layer: 5
   m_Name: DoneButton
   m_TagString: Untagged
@@ -2000,6 +2003,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868283565}
   m_CullTransparentMesh: 1
+--- !u!114 &1868283570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868283565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415448cff3c875d418bf9e2334757408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notEnough: {fileID: 0}
 --- !u!1 &1896965327
 GameObject:
   m_ObjectHideFlags: 0
