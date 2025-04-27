@@ -56,13 +56,14 @@ public class WhatToAdd : MonoBehaviour
 		}
 	}
 
-    public void Text()
-    {
-        text.text = "";
+	public void Text()
+	{
+		text.text = "";
 		text.text += "There are " + GameManager.Instance.playerNumber.ToString() + " players in game.\n";
-		text.text += "There is 1 Demon in game.\n";
-        text.text += "There should be " + townNumber.ToString() + " Town in game.\n";
-		text.text += "There should be " + outsiderNumber.ToString() + " Outsiders in game.\n";
-		text.text += "There should be " + minionNumber.ToString() + " Minions in game.\n";
+		text.text += "There is 1 <b><color=#FF0000>Demon</color></b> in game.\n";
+		text.text += "There should be " + townNumber.ToString() + " <b><color=#00AEFF>Town</color></b> in game.\n";
+		text.text += "There should be " + outsiderNumber.ToString() + " <b><color=#7C00FF>Outsiders</color></b> in game.\n";
+		text.text += "There should be " + minionNumber.ToString() + " <b><color=#FF3600>Minions</color></b> in game.\n";
 	}
+
 }
