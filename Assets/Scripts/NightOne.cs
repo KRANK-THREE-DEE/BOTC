@@ -46,6 +46,7 @@ public class NightOne : MonoBehaviour
 		else
 		if (currentRole == "spy")
 		{
+			infoText.text = "";
 			Washerwoman(); 
 		}
 		else 
