@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static CharacterLibrary;
 
 public class NightOne : MonoBehaviour
@@ -169,9 +170,14 @@ public class NightOne : MonoBehaviour
 
 	public void Spy()
 	{
+		infoText.gameObject.transform.position = onscreenLocation.transform.position;
 		currentRole = "spy";
 		gameText.text = "spy do ur thing";
-		//can't program spy yet, he's hella complicated
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		foreach (Player x in allPlayers)
+		{
+			infoText.text += x.playerName.ToString() + " is the " + x.characterName.ToString() + ". \n";
+		}
 	}
 
 	public void Washerwoman()

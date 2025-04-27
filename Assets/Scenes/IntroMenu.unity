@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 835925732}
   - component: {fileID: 835925731}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1048,6 +1048,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896426c0621212441ad873c856352dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
+  playerTotalNames: []
+  impAvailable: 0
+  poisonerAvailable: 0
+  spyAvailable: 0
+  scarletWomanAvailable: 0
+  baronAvailable: 0
+  butlerAvailable: 0
+  recluseAvailable: 0
+  drunkAvailable: 0
+  saintAvailable: 0
+  washerwomanAvailable: 0
+  librarianAvailable: 0
+  investigatorAvailable: 0
+  chefAvailable: 0
+  empathAvailable: 0
+  fortuneTellerAvailable: 0
+  undertakerAvailable: 0
+  monkAvailable: 0
+  ravenkeeperAvailable: 0
+  virginAvailable: 0
+  slayerAvailable: 0
+  soldierAvailable: 0
+  mayorAvailable: 0
+  availableRoles: 
 --- !u!1 &882026825
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,8 +12,6 @@ public class ToggleListPopulator : MonoBehaviour
 	private List<Toggle> toggleList = new List<Toggle>();
 	private NightOne nightOneScript;
 
-
-
 	void Start()
 	{
 		nightOneScript = GetComponent<NightOne>();
