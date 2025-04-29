@@ -25,10 +25,19 @@ public class NightOne : MonoBehaviour
 	public GameObject DoneButton;
 	//public ChangeScene change;
 
+	public GameObject spyPlayerButton;
+	public GameObject spyTownButton;
+	public GameObject spyOutsiderButton;
+	public GameObject spyEvilButton;
+
 
 
 	void Start()
 	{
+		spyPlayerButton.gameObject.SetActive(false);
+		spyTownButton.gameObject.SetActive(false);
+		spyOutsiderButton.gameObject.SetActive(false);
+		spyEvilButton.gameObject.SetActive(false);
 		Scroll.transform.position = offscreenLocation.transform.position;
 		infoText.gameObject.transform.position = offscreenLocation.transform.position;
 
@@ -49,6 +58,10 @@ public class NightOne : MonoBehaviour
 		else
 		if (currentRole == "spy")
 		{
+			spyPlayerButton.gameObject.SetActive(false);
+			spyTownButton.gameObject.SetActive(false);
+			spyOutsiderButton.gameObject.SetActive(false);
+			spyEvilButton.gameObject.SetActive(false);
 			infoText.text = "";
 			Washerwoman(); 
 		}
@@ -179,6 +192,10 @@ public class NightOne : MonoBehaviour
 		infoText.gameObject.transform.position = onscreenLocation.transform.position;
 		currentRole = "spy";
 		gameText.text = "spy do ur thing";
+		spyPlayerButton.gameObject.SetActive(true);
+		spyTownButton.gameObject.SetActive(true);
+		spyOutsiderButton.gameObject.SetActive(true);
+		spyEvilButton.gameObject.SetActive(true);
 		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
 		foreach (Player x in allPlayers)
 		{
