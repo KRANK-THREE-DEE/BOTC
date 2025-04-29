@@ -196,20 +196,58 @@ public class NightOne : MonoBehaviour
 		spyTownButton.gameObject.SetActive(true);
 		spyOutsiderButton.gameObject.SetActive(true);
 		spyEvilButton.gameObject.SetActive(true);
+	}
+
+	public void SpyPlayerInfo()
+	{
+		infoText.text = "";
 		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
 		foreach (Player x in allPlayers)
 		{
 			infoText.text += x.playerName.ToString() + " is the " + x.characterName.ToString() + ". \n";
-			if (x.isPoisoned == true)
+		}
+	}
+
+	public void SpyEvilInfo()
+	{
+		infoText.text = "";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		bool anyonePoisoned = false;
+
+		foreach (Player x in allPlayers)
+		{
+			Debug.Log($"{x.playerName} poisoned status: {x.isPoisoned}"); //everyone is registering as false :(
+			if (x.isPoisoned)
 			{
-				infoText.text += x.playerName.ToString() + " is poisoned.";
+				infoText.text += x.playerName.ToString() + " is poisoned.\n";
+				anyonePoisoned = true;
 			}
-			if (x.isMaster ==  true)
+		}
+
+		if (anyonePoisoned == false)
+		{
+			infoText.text += "No one is poisoned.";
+		}
+	}
+
+	public void SpyOutsiderInfo()
+	{
+		infoText.text = "";
+		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		foreach (Player x in allPlayers)
+		{
+			if (x.isMaster == true)
 			{
 
 				infoText.text += x.playerName.ToString() + " is the Butler's Master.";
 			}
 		}
+	}
+
+	public void SpyTownInfo()
+	{
+		infoText.text = "";
+		Debug.Log("info here.");
 	}
 
 	public void Washerwoman()

@@ -127,7 +127,10 @@ public class AssignCharacters : MonoBehaviour
 		AssignRoles(allDemonRoles, demonNumber);
 
 		ShuffleCharacterNamesAndAlignments(players);
-		for(int i = 0; i < GameManager.Instance.playerNumber; i++)
+
+		GameManager.Instance.playerOrder = players;
+
+		for (int i = 0; i < GameManager.Instance.playerNumber; i++)
 		{
 			Debug.Log(players[i].playerName + " is assigned " + players[i].characterName);
 		}
