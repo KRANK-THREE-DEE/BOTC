@@ -169,7 +169,9 @@ public class NightOne : MonoBehaviour
 				gameText.text +=  x.playerName.ToString() + " ";
 			}
 		}
-		gameText.text = "Bluffs: ";
+		List<CharacterLibrary.CharacterRole> bluffRoles = RoleManager.GetComponent<AssignCharacters>().GetDemonBluffRoles();
+		string bluffNames = string.Join(", ", bluffRoles.ConvertAll(role => role.characterName));
+		gameText.text += "\nBluffs: " + bluffNames;
 		yield return new WaitForSeconds(5);
 		Debug.Log($"Ended at {Time.time}");
 		gameText.text = "Timer done.";
@@ -212,7 +214,6 @@ public class NightOne : MonoBehaviour
 	{
 		infoText.text = "";
 		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
-		bool anyonePoisoned = false;
 
 		foreach (Player x in allPlayers)
 		{
@@ -220,13 +221,7 @@ public class NightOne : MonoBehaviour
 			if (x.isPoisoned)
 			{
 				infoText.text += x.playerName.ToString() + " is poisoned.\n";
-				anyonePoisoned = true;
 			}
-		}
-
-		if (anyonePoisoned == false)
-		{
-			infoText.text += "No one is poisoned.";
 		}
 	}
 
@@ -238,7 +233,6 @@ public class NightOne : MonoBehaviour
 		{
 			if (x.isMaster == true)
 			{
-
 				infoText.text += x.playerName.ToString() + " is the Butler's Master.";
 			}
 		}

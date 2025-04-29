@@ -74,6 +74,7 @@ public class GameManager : Singleton<GameManager>
 	{
 
 		GameManager.Instance.availableRoles.Clear();
+		GameManager.Instance.characterRolesInCurrentGame.Clear();
 
 		GameManager.Instance.availableRoles.Add(GameManager.Instance.impAvailable);
 		GameManager.Instance.availableRoles.Add(GameManager.Instance.poisonerAvailable);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static CharacterLibrary;
@@ -27,10 +28,10 @@ public class AssignCharacters : MonoBehaviour
 		//allMinionRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.minionRoles);
 		//allDemonRoles = new List<CharacterLibrary.CharacterRole>(CharacterLibrary.demonRoles);
 
-		print("STARTING FOR LOOP");
-		for(int i = 0; i < GameManager.Instance.characterRolesInCurrentGame.Count; i++)
+		//print("STARTING FOR LOOP");
+		for (int i = 0; i < GameManager.Instance.characterRolesInCurrentGame.Count; i++)
 		{
-			print("LOOP: " + i);
+			//print("LOOP: " + i);
 			if (GameManager.Instance.characterRolesInCurrentGame[i].alignment == Alignment.Townsfolk)
 			{
 				allTownsfolkRoles.Add(GameManager.Instance.characterRolesInCurrentGame[i]);
@@ -128,6 +129,22 @@ public class AssignCharacters : MonoBehaviour
 
 		ShuffleCharacterNamesAndAlignments(players);
 
+		List<CharacterLibrary.CharacterRole> unassignedTownsfolkRoles = GetUnassignedRoles(allTownsfolkRoles, players);
+		List<CharacterLibrary.CharacterRole> unassignedOutsiderRoles = GetUnassignedRoles(allOutsiderRoles, players);
+
+
+		Debug.Log("Unassigned Townsfolk Roles:");
+		foreach (var role in unassignedTownsfolkRoles)
+		{
+			Debug.Log(role.characterName);
+		}
+
+		Debug.Log("Unassigned Outsider Roles:");
+		foreach (var role in unassignedOutsiderRoles)
+		{
+			Debug.Log(role.characterName);
+		}
+
 		GameManager.Instance.playerOrder = players;
 
 		for (int i = 0; i < GameManager.Instance.playerNumber; i++)
@@ -139,7 +156,7 @@ public class AssignCharacters : MonoBehaviour
 	// Helper method to assign roles
 	private void AssignRoles(List<CharacterLibrary.CharacterRole> roleList, int numberOfRolesToAssign)
 	{
-		
+
 		for (int i = 0; i < numberOfRolesToAssign; i++)
 		{
 			if (roleList.Count > 0)
@@ -234,5 +251,57 @@ public class AssignCharacters : MonoBehaviour
 	{
 		return players;
 	}
+
+	private List<CharacterLibrary.CharacterRole> GetUnassignedRoles(List<CharacterLibrary.CharacterRole> allRoles, List<Player> players) //get full list of possible Demon bluffs
+	{
+		List<CharacterLibrary.CharacterRole> unassignedRoles = new List<CharacterLibrary.CharacterRole>();
+
+		// Loop through the original list of all roles
+		foreach (var role in allRoles)
+		{
+			bool isAssigned = false;
+
+			// Check if this role is already assigned to any player
+			foreach (var player in players)
+			{
+				if (player.characterName == role.characterName)
+				{
+					isAssigned = true;
+					break;
+				}
+			}
+
+			// If the role is not assigned, add it to the unassigned list
+			if (!isAssigned)
+			{
+				unassignedRoles.Add(role);
+			}
+		}
+
+		return unassignedRoles;
+	}
+
+	// Public method to get 3 random unassigned Townsfolk or Outsider roles for Demon bluffs
+	public List<CharacterLibrary.CharacterRole> GetDemonBluffRoles()
+	{
+		// Get unassigned Townsfolk and Outsider roles
+		List<CharacterLibrary.CharacterRole> unassignedTownsfolk = GetUnassignedRoles(allTownsfolkRoles, players);
+		List<CharacterLibrary.CharacterRole> unassignedOutsiders = GetUnassignedRoles(allOutsiderRoles, players);
+
+		// Combine both lists
+		List<CharacterLibrary.CharacterRole> combinedList = new List<CharacterLibrary.CharacterRole>();
+		combinedList.AddRange(unassignedTownsfolk);
+		combinedList.AddRange(unassignedOutsiders);
+
+		// Shuffle combined list
+		System.Random rng = new System.Random();
+		combinedList = combinedList.OrderBy(x => rng.Next()).ToList();
+
+		// Take up to 3 roles (if less are available, it won’t throw an error)
+		return combinedList.Take(3).ToList();
+	}
+
+
+
 
 }
