@@ -28,6 +28,11 @@ public class ChangeScene : MonoBehaviour
 
 	public void Scene4()
 	{
+		SceneManager.LoadScene("ViewRoles");
+	}
+
+	public void Night1()
+	{
 		SceneManager.LoadScene("Night1");
 	}
 

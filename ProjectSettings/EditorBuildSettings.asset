@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Day.unity
     guid: 234d258ae1aa1574fa33112399f08acb
+  - enabled: 1
+    path: Assets/Scenes/ViewRoles.unity
+    guid: 26e0557b80c735f4b89ce3d1e5434811
   m_configObjects: {}
