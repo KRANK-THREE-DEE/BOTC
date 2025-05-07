@@ -2,32 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class ViewRoles : MonoBehaviour
 {
-    //on Enter Button in ViewRoles scene, will run onClick
-    //take input from input field and match to player name in game Manager
-    //if match, show player role name + role information and bring up continue button
-    //on continue button, close and clear role info text
-    //if no match, show text saying retype
-    //increase int if close button hit 
-    //if int = amount of players, Start Night button is interactable
-    //make lower?
-
     public TMP_Text roleText;
-    public TMP_InputField inputField;
+    public TMP_InputField input;
     public Button closeButton;
 
-    public int buttonActivateCount;
-    void Start()
+	public int buttonActivateCount;
+
+    public Transform gridParent;
+    public int numberofButtons;
+
+    public GameObject buttonPrefab;
+	void Start()
+	{
+		int i = 0;
+		foreach (var player in GameManager.Instance.playerOrder)
+		{
+			GameObject newButton = Instantiate(buttonPrefab, gridParent);
+			RectTransform rt = newButton.GetComponent<RectTransform>();
+			if (rt != null)
+			{
+				rt.sizeDelta = new Vector2(200, 100); // Width x Height
+			}
+
+			TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
+			if (buttonText != null)
+			{
+				buttonText.text = player.playerName; // Assuming player has a 'name' field
+			}
+			else
+			{
+				Debug.LogWarning("No TMP_Text found on button prefab.");
+			}
+			i++;
+		}
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
+
+
 }
