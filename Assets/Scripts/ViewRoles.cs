@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class ViewRoles : MonoBehaviour
 {
-    public TMP_Text roleText;
-    public TMP_InputField input;
     public Button closeButton;
 
 	public int buttonActivateCount;

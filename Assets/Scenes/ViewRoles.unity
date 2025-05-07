@@ -938,6 +938,7 @@ GameObject:
   - component: {fileID: 1027856014}
   - component: {fileID: 1027856013}
   - component: {fileID: 1027856012}
+  - component: {fileID: 1027856015}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1026,6 +1027,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027856010}
   m_CullTransparentMesh: 1
+--- !u!114 &1027856015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027856010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e507f49c13e7d8478a7695daee4e76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeButton: {fileID: 283245192}
+  buttonActivateCount: 0
+  gridParent: {fileID: 1027856011}
+  numberofButtons: 0
+  buttonPrefab: {fileID: 5908154731432082147, guid: 6fa5d9e113a12a643a51c92fb90f81a7, type: 3}
 --- !u!1 &1785955680
 GameObject:
   m_ObjectHideFlags: 0
