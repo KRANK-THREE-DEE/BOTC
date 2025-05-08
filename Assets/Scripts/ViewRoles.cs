@@ -16,6 +16,7 @@ public class ViewRoles : MonoBehaviour
     public GameObject buttonPrefab;
 	void Start()
 	{
+		AssignCharacters.Instance.gameObject.SetActive(true);
 		int i = 0;
 		foreach (var player in GameManager.Instance.playerOrder)
 		{

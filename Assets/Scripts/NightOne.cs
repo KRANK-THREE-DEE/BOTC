@@ -10,7 +10,6 @@ public class NightOne : MonoBehaviour
 {
     public TMP_Text gameText;
 	public string currentRole;
-	public GameObject RoleManager;
 	public List<string> roleList;
 	public List<string> townsfolkInPlay;
 
@@ -41,7 +40,7 @@ public class NightOne : MonoBehaviour
 		Scroll.transform.position = offscreenLocation.transform.position;
 		infoText.gameObject.transform.position = offscreenLocation.transform.position;
 
-		roleList = RoleManager.GetComponent<AssignCharacters>().GetAssignedRoleNames(); //list of all roles that have been assigned to players in game
+		roleList = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetAssignedRoleNames(); //list of all roles that have been assigned to players in game
 
 		float duration = 5f;
 		StartCoroutine(StartNight(duration));
@@ -141,7 +140,7 @@ public class NightOne : MonoBehaviour
 	{
 		gameText.text = "minions do ur thing (big game)";
 		Debug.Log($"Started at {Time.time}");
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		foreach (Player x in allPlayers)
 		{
 			if (x.alignment == CharacterLibrary.Alignment.Demon)
@@ -161,7 +160,7 @@ public class NightOne : MonoBehaviour
 		//whatever thing has minions stick thumb out (or jackbox jus showing names on phone)
 		Debug.Log($"Started at {Time.time}");
 		gameText.text = "Minions: ";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		foreach (Player x in allPlayers)
 		{
 			if (x.alignment == CharacterLibrary.Alignment.Minion)
@@ -169,7 +168,7 @@ public class NightOne : MonoBehaviour
 				gameText.text +=  x.playerName.ToString() + " ";
 			}
 		}
-		List<CharacterLibrary.CharacterRole> bluffRoles = RoleManager.GetComponent<AssignCharacters>().GetDemonBluffRoles();
+		List<CharacterLibrary.CharacterRole> bluffRoles = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetDemonBluffRoles();
 		string bluffNames = string.Join(", ", bluffRoles.ConvertAll(role => role.characterName));
 		gameText.text += "\nBluffs: " + bluffNames;
 		yield return new WaitForSeconds(5);
@@ -203,7 +202,7 @@ public class NightOne : MonoBehaviour
 	public void SpyPlayerInfo()
 	{
 		infoText.text = "";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		foreach (Player x in allPlayers)
 		{
 			infoText.text += x.playerName.ToString() + " is the " + x.characterName.ToString() + ". \n";
@@ -213,7 +212,7 @@ public class NightOne : MonoBehaviour
 	public void SpyEvilInfo()
 	{
 		infoText.text = "";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 
 		foreach (Player x in allPlayers)
 		{
@@ -228,7 +227,7 @@ public class NightOne : MonoBehaviour
 	public void SpyOutsiderInfo()
 	{
 		infoText.text = "";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		foreach (Player x in allPlayers)
 		{
 			if (x.isMaster == true)
@@ -249,7 +248,7 @@ public class NightOne : MonoBehaviour
 		infoText.gameObject.transform.position = onscreenLocation.transform.position;
 		currentRole = "washerwoman";
 		gameText.text = "washerwoman do ur thing";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		List<Player> allTown = new List<Player>();
 		foreach (Player x in allPlayers)
 		{
@@ -278,7 +277,7 @@ public class NightOne : MonoBehaviour
 	{
 		currentRole = "librarian";
 		gameText.text = "librarian do ur thing";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		List<Player> allOutsiders = new List<Player>();
 		foreach (Player x in allPlayers)
 		{
@@ -315,7 +314,7 @@ public class NightOne : MonoBehaviour
 	{
 		currentRole = "investigator";
 		gameText.text = "investigator do ur thing";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		List<Player> allMinions = new List<Player>();
 		foreach (Player x in allPlayers)
 		{
@@ -345,7 +344,7 @@ public class NightOne : MonoBehaviour
 		currentRole = "chef";
 		gameText.text = "chef do ur thing";
 		//Shows 0, 1, 2, etc for # of evil players sitting next to each other (counts first and last position as sitting next to each other
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		int chefCounter = 0;
 		for (int i = 0; i < allPlayers.Count; i++)
 		{
@@ -376,7 +375,7 @@ public class NightOne : MonoBehaviour
 		//don't need to skip dead players cause night 1
 		currentRole = "empath";
 		gameText.text = "empath do ur thing";
-		List<Player> allPlayers = RoleManager.GetComponent<AssignCharacters>().GetPlayers();
+		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		int empathCounter = 0;
 
 		for(int i = 0; i < allPlayers.Count; i++)

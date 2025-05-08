@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static CharacterLibrary;
 
-public class AssignCharacters : MonoBehaviour
+public class AssignCharacters : Singleton<AssignCharacters>
 {
 	public int minionNumber;
 	public int townNumber;
