@@ -29,7 +29,7 @@ public class ViewRoles : MonoBehaviour
 			TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
 			if (buttonText != null)
 			{
-				buttonText.text = player.playerName; // Assuming player has a 'name' field
+				buttonText.text = player.playerName; 
 			}
 			else
 			{
