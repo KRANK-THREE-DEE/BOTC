@@ -252,7 +252,7 @@ public class NightOne : MonoBehaviour
 		List<Player> allTown = new List<Player>();
 		foreach (Player x in allPlayers)
 		{
-			if (x.alignment == CharacterLibrary.Alignment.Townsfolk)
+			if (x.alignment == CharacterLibrary.Alignment.Townsfolk && x.characterName != "Washerwoman")
 			{
 				allTown.Add(x);
 			}
@@ -270,7 +270,25 @@ public class NightOne : MonoBehaviour
 		}
 		print("Selected Town: " + selectedTown.playerName + " is the " + selectedTown.characterName);
 		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
-		infoText.text += "Either " + selectedTown.playerName + " or " + selectedRandom.playerName + " is the " + selectedTown.characterName + ".";
+
+
+		Player roleShownAs;
+		Player other;
+
+		if (Random.value < 0.5f)
+		{
+			roleShownAs = selectedTown;      // True Townsfolk
+			other = selectedRandom;          // Decoy
+		}
+		else
+		{
+			roleShownAs = selectedRandom;    // Decoy
+			other = selectedTown;            // True Townsfolk
+		}
+
+		// Show info to player
+		string role = selectedTown.characterName; // Only selectedTown is guaranteed to be Townsfolk
+		infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 	}
 
 	public void Librarian()
@@ -305,7 +323,23 @@ public class NightOne : MonoBehaviour
 			}
 			print("Selected Outsider: " + selectedOutsider.playerName + " is the " + selectedOutsider.characterName);
 			print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
-			infoText.text += "Either " + selectedOutsider.playerName + " or " + selectedRandom.playerName + " is the " + selectedOutsider.characterName + ".";
+
+			Player roleShownAs;
+			Player other;
+
+			if (Random.value < 0.5f)
+			{
+				roleShownAs = selectedOutsider;     // True Outsider
+				other = selectedRandom;
+			}
+			else
+			{
+				roleShownAs = selectedRandom;       // Decoy
+				other = selectedOutsider;
+			}
+
+			string role = selectedOutsider.characterName; // Only selectedOutsider is guaranteed to be an Outsider
+			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
 
 	}
@@ -336,7 +370,24 @@ public class NightOne : MonoBehaviour
 		}
 		print("Selected Town: " + selectedMinion.playerName + " is the " + selectedMinion.characterName);
 		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
-		infoText.text += "Either " + selectedMinion.playerName + " or " + selectedRandom.playerName + " is the " + selectedMinion.characterName + ".";
+
+
+		Player roleShownAs;
+		Player other;
+
+		if (Random.value < 0.5f)
+		{
+			roleShownAs = selectedMinion;     // True Minion
+			other = selectedRandom;
+		}
+		else
+		{
+			roleShownAs = selectedRandom;     // Decoy
+			other = selectedMinion;
+		}
+
+		string role = selectedMinion.characterName; // Only selectedMinion is guaranteed to be a Minion
+		infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 	}
 
 	public void Chef()
