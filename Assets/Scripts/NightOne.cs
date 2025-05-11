@@ -22,13 +22,13 @@ public class NightOne : MonoBehaviour
 	public bool butlerDone;
 
 	public GameObject DoneButton;
-	//public ChangeScene change;
 
 	public GameObject spyPlayerButton;
 	public GameObject spyTownButton;
 	public GameObject spyOutsiderButton;
 	public GameObject spyEvilButton;
 
+	public bool currentPoisoned;
 
 
 	void Start()
@@ -216,7 +216,7 @@ public class NightOne : MonoBehaviour
 
 		foreach (Player x in allPlayers)
 		{
-			Debug.Log($"{x.playerName} poisoned status: {x.isPoisoned}"); //everyone is registering as false :(
+			Debug.Log($"{x.playerName} poisoned status: {x.isPoisoned}"); 
 			if (x.isPoisoned)
 			{
 				infoText.text += x.playerName.ToString() + " is poisoned.\n";
@@ -248,8 +248,27 @@ public class NightOne : MonoBehaviour
 		infoText.gameObject.transform.position = onscreenLocation.transform.position;
 		currentRole = "washerwoman";
 		gameText.text = "washerwoman do ur thing";
+
+
 		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		List<Player> allTown = new List<Player>();
+
+		foreach (Player x in allPlayers)
+		{
+			//find who is washerwoman and see if they are poisoned
+			if (x.characterName == "Washerwoman")
+			{
+				Debug.Log(x.playerName + " is the Washerwoman.");
+				if (x.isPoisoned ==  true)
+				{
+					Debug.Log(x.playerName + " is poisoned.");
+					currentPoisoned = true;
+				}
+			}
+		}
+
+
+
 		foreach (Player x in allPlayers)
 		{
 			if (x.alignment == CharacterLibrary.Alignment.Townsfolk && x.characterName != "Washerwoman")
@@ -271,24 +290,55 @@ public class NightOne : MonoBehaviour
 		print("Selected Town: " + selectedTown.playerName + " is the " + selectedTown.characterName);
 		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
 
-
-		Player roleShownAs;
-		Player other;
-
-		if (Random.value < 0.5f)
+		if (currentPoisoned == true) //if washerwoman is poisoned
 		{
-			roleShownAs = selectedTown;      // True Townsfolk
-			other = selectedRandom;          // Decoy
+			//show any Town role instead of the selectedTown 
+			int prandom = Random.Range(0, townsfolkRoles.Count);
+			string poisonName = townsfolkRoles[prandom].characterName.ToString();
+			Debug.Log("poison role:" + poisonName);
+			
+			//randomize the order the two names are shown
+			Player roleShownAs;
+			Player other;
+
+			if (Random.value < 0.5f)
+			{
+				roleShownAs = selectedTown;   // True Townsfolk
+				other = selectedRandom;       // Decoy
+			}
+			else
+			{
+				roleShownAs = selectedRandom;  // Decoy
+				other = selectedTown;          // True Townsfolk
+			}
+
+			// Show info to player
+			string role = poisonName.ToString();
+			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
 		else
 		{
-			roleShownAs = selectedRandom;    // Decoy
-			other = selectedTown;            // True Townsfolk
+			//randomize the order the two names are shown
+			Player roleShownAs;
+			Player other;
+
+			if (Random.value < 0.5f)
+			{
+				roleShownAs = selectedTown;   // True Townsfolk
+				other = selectedRandom;       // Decoy
+			}
+			else
+			{
+				roleShownAs = selectedRandom;  // Decoy
+				other = selectedTown;          // True Townsfolk
+			}
+
+			// Show info to player
+			string role = selectedTown.characterName;
+			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
 
-		// Show info to player
-		string role = selectedTown.characterName; // Only selectedTown is guaranteed to be Townsfolk
-		infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
+		
 	}
 
 	public void Librarian()
