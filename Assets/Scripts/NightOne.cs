@@ -321,6 +321,7 @@ public class NightOne : MonoBehaviour
 			// Show info to player
 			string role = poisonName.ToString();
 			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
+			currentPoisoned = false;
 		}
 		else
 		{
@@ -353,6 +354,21 @@ public class NightOne : MonoBehaviour
 		gameText.text = "librarian do ur thing";
 		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		List<Player> allOutsiders = new List<Player>();
+
+		foreach (Player x in allPlayers)
+		{
+			//find who is librarian and see if they are poisoned
+			if (x.characterName == "Librarian")
+			{
+				Debug.Log(x.playerName + " is the Librarian.");
+				if (x.isPoisoned == true)
+				{
+					Debug.Log(x.playerName + " is poisoned.");
+					currentPoisoned = true;
+				}
+			}
+		}
+
 		foreach (Player x in allPlayers)
 		{
 			if (x.alignment == CharacterLibrary.Alignment.Outsider)
@@ -380,22 +396,60 @@ public class NightOne : MonoBehaviour
 			print("Selected Outsider: " + selectedOutsider.playerName + " is the " + selectedOutsider.characterName);
 			print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
 
-			Player roleShownAs;
-			Player other;
-
-			if (Random.value < 0.5f)
+			if (currentPoisoned ==  true)
 			{
-				roleShownAs = selectedOutsider;     // True Outsider
-				other = selectedRandom;
+				string poisonName = "";
+				int prandom = 0;
+
+				while (poisonName == "" || poisonName == "Librarian")
+				{
+					prandom = Random.Range(0, outsiderRoles.Count);
+					poisonName = outsiderRoles[prandom].characterName;
+				}
+
+				Debug.Log("poison role: " + poisonName);
+				Player roleShownAs;
+				Player other;
+
+				if (Random.value < 0.5f)
+				{
+					roleShownAs = selectedOutsider;   // True Townsfolk
+					other = selectedRandom;       // Decoy
+				}
+				else
+				{
+					roleShownAs = selectedRandom;  // Decoy
+					other = selectedOutsider;          // True Townsfolk
+				}
+
+				// Show info to player
+				string role = poisonName.ToString();
+				infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
+				currentPoisoned = false;
 			}
 			else
 			{
-				roleShownAs = selectedRandom;       // Decoy
-				other = selectedOutsider;
+				//randomize the order the two names are shown
+				Player roleShownAs;
+				Player other;
+
+				if (Random.value < 0.5f)
+				{
+					roleShownAs = selectedOutsider;   // True Townsfolk
+					other = selectedRandom;       // Decoy
+				}
+				else
+				{
+					roleShownAs = selectedRandom;  // Decoy
+					other = selectedOutsider;          // True Townsfolk
+				}
+
+				// Show info to player
+				string role = selectedOutsider.characterName;
+				infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 			}
 
-			string role = selectedOutsider.characterName; // Only selectedOutsider is guaranteed to be an Outsider
-			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
+			
 		}
 
 	}
