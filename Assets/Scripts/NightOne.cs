@@ -582,6 +582,22 @@ public class NightOne : MonoBehaviour
 		//Shows 0, 1, 2, etc for # of evil players sitting next to each other (counts first and last position as sitting next to each other
 		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		int chefCounter = 0;
+
+		// Check if Chef is poisoned
+		foreach (Player x in allPlayers)
+		{
+			if (x.characterName == "Chef")
+			{
+				Debug.Log(x.playerName + " is the Chef.");
+				if (x.isPoisoned)
+				{
+					Debug.Log(x.playerName + " is poisoned.");
+					currentPoisoned = true;
+				}
+			}
+		}
+
+
 		for (int i = 0; i < allPlayers.Count; i++)
 		{
 			Player current = allPlayers[i]; //i is the current index starting at 0
@@ -594,6 +610,11 @@ public class NightOne : MonoBehaviour
 				chefCounter++;
 			}
 		}
+
+		if (currentPoisoned ==  true)
+		{
+			chefCounter = Random.Range(0, 2);
+		}
 		if (chefCounter == 1)
 		{
 			infoText.text += "There is " + chefCounter.ToString() + " pair of evil players sitting next to each other.";
@@ -602,6 +623,7 @@ public class NightOne : MonoBehaviour
 		{
 			infoText.text += "There are " + chefCounter.ToString() + " pairs of evil players sitting next to each other.";
 		}
+
 		currentPoisoned = false;
 	}
 
@@ -615,7 +637,22 @@ public class NightOne : MonoBehaviour
 		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		int empathCounter = 0;
 
-		for(int i = 0; i < allPlayers.Count; i++)
+
+		// Check if Empath is poisoned
+		foreach (Player x in allPlayers)
+		{
+			if (x.characterName == "Empath")
+			{
+				Debug.Log(x.playerName + " is the Empath.");
+				if (x.isPoisoned)
+				{
+					Debug.Log(x.playerName + " is poisoned.");
+					currentPoisoned = true;
+				}
+			}
+		}
+
+		for (int i = 0; i < allPlayers.Count; i++)
 		{
 			if (allPlayers[i].characterName.ToLower() == "empath")
 			{
@@ -648,7 +685,10 @@ public class NightOne : MonoBehaviour
 			empathCounter++;
 		}
 
-
+		if (currentPoisoned == true)
+		{
+			empathCounter = Random.Range(0, 2);
+		}
 		if (empathCounter == 1)
 		{
 			infoText.text += "There is one evil player sitting next to you.";
