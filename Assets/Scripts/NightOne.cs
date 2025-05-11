@@ -343,7 +343,7 @@ public class NightOne : MonoBehaviour
 			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
 
-		
+		currentPoisoned = false;
 	}
 
 	public void Librarian()
@@ -458,6 +458,7 @@ public class NightOne : MonoBehaviour
 
 			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
+		currentPoisoned = false;
 
 	}
 
@@ -552,7 +553,7 @@ public class NightOne : MonoBehaviour
 			string role;
 			if (currentPoisoned)
 			{
-				// Choose a random fake minion role (not Investigator)
+				// Choose a random fake minion role
 				string poisonName = "";
 				int prandom = 0;
 				while (poisonName == "" || poisonName == "Investigator")
@@ -571,6 +572,7 @@ public class NightOne : MonoBehaviour
 
 			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
+		currentPoisoned = false;
 	}
 
 	public void Chef()
@@ -600,6 +602,7 @@ public class NightOne : MonoBehaviour
 		{
 			infoText.text += "There are " + chefCounter.ToString() + " pairs of evil players sitting next to each other.";
 		}
+		currentPoisoned = false;
 	}
 
 	public void Empath()
@@ -654,6 +657,7 @@ public class NightOne : MonoBehaviour
 		{
 			infoText.text += "There are " + empathCounter.ToString() + " evil players sitting next to you.";
 		}
+		currentPoisoned = false;
 	}
 
 	public void FortuneTeller()
