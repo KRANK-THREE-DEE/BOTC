@@ -460,6 +460,21 @@ public class NightOne : MonoBehaviour
 		gameText.text = "investigator do ur thing";
 		List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
 		List<Player> allMinions = new List<Player>();
+
+		foreach (Player x in allPlayers)
+		{
+			// Find the Investigator and check if poisoned
+			if (x.characterName == "Investigator")
+			{
+				Debug.Log(x.playerName + " is the Investigator.");
+				if (x.isPoisoned)
+				{
+					Debug.Log(x.playerName + " is poisoned.");
+					currentPoisoned = true;
+				}
+			}
+		}
+
 		foreach (Player x in allPlayers)
 		{
 			if (x.alignment == CharacterLibrary.Alignment.Minion)
@@ -471,7 +486,7 @@ public class NightOne : MonoBehaviour
 		Player selectedMinion = allMinions[random];
 		int random2 = Random.Range(0, allPlayers.Count);
 		Player selectedRandom = allPlayers[random2];
-		while (selectedMinion == selectedRandom || selectedRandom.characterName == "Washerwoman" || selectedMinion.characterName == "Washerwoman")
+		while (selectedMinion == selectedRandom || selectedRandom.characterName == "Investigator" || selectedMinion.characterName == "Investigator")
 		{
 			random = Random.Range(0, allMinions.Count);
 			selectedMinion = allMinions[random];
@@ -481,23 +496,57 @@ public class NightOne : MonoBehaviour
 		print("Selected Town: " + selectedMinion.playerName + " is the " + selectedMinion.characterName);
 		print("Selected Random: " + selectedRandom.playerName + " is the " + selectedRandom.characterName);
 
-
-		Player roleShownAs;
-		Player other;
-
-		if (Random.value < 0.5f)
+		if (currentPoisoned == true)
 		{
-			roleShownAs = selectedMinion;     // True Minion
-			other = selectedRandom;
+			string poisonName = "";
+			int prandom = 0;
+
+			while (poisonName == "" || poisonName == "Librarian")
+			{
+				prandom = Random.Range(0, minionRoles.Count);
+				poisonName = minionRoles[prandom].characterName;
+			}
+
+			Debug.Log("poison role: " + poisonName);
+			Player roleShownAs;
+			Player other;
+
+			if (Random.value < 0.5f)
+			{
+				roleShownAs = selectedMinion;   // True Minion
+				other = selectedRandom;         // Decoy
+			}
+			else
+			{
+				roleShownAs = selectedRandom;   // Decoy
+				other = selectedMinion;         // True Minion
+			}
+
+			// Show info to player
+			string role = poisonName.ToString();
+			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
+			currentPoisoned = false;
 		}
 		else
 		{
-			roleShownAs = selectedRandom;     // Decoy
-			other = selectedMinion;
+			Player roleShownAs;
+			Player other;
+
+			if (Random.value < 0.5f)
+			{
+				roleShownAs = selectedMinion;     // True Minion
+				other = selectedRandom;
+			}
+			else
+			{
+				roleShownAs = selectedRandom;     // Decoy
+				other = selectedMinion;
+			}
+
+			string role = selectedMinion.characterName; // Only selectedMinion is guaranteed to be a Minion
+			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
 
-		string role = selectedMinion.characterName; // Only selectedMinion is guaranteed to be a Minion
-		infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 	}
 
 	public void Chef()
