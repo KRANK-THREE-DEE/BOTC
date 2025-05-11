@@ -292,11 +292,17 @@ public class NightOne : MonoBehaviour
 
 		if (currentPoisoned == true) //if washerwoman is poisoned
 		{
-			//show any Town role instead of the selectedTown 
-			int prandom = Random.Range(0, townsfolkRoles.Count);
-			string poisonName = townsfolkRoles[prandom].characterName.ToString();
-			Debug.Log("poison role:" + poisonName);
-			
+			string poisonName = "";
+			int prandom = 0;
+
+			while (poisonName == "" || poisonName == "Washerwoman")
+			{
+				prandom = Random.Range(0, townsfolkRoles.Count);
+				poisonName = townsfolkRoles[prandom].characterName;
+			}
+
+			Debug.Log("poison role: " + poisonName);
+
 			//randomize the order the two names are shown
 			Player roleShownAs;
 			Player other;
