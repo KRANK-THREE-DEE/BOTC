@@ -111,6 +111,20 @@ public class ToggleListPopulator : MonoBehaviour
 		}
 		else if (nightOneScript.currentRole == "fortuneteller")
 		{
+			List<Player> allPlayers = AssignCharacters.Instance.GetComponent<AssignCharacters>().GetPlayers();
+			foreach (Player x in allPlayers)
+			{
+				//find who is librarian and see if they are poisoned
+				if (x.characterName == "Fortune Teller")
+				{
+					Debug.Log(x.playerName + " is the Fortune Teller.");
+					if (x.isPoisoned == true)
+					{
+						Debug.Log(x.playerName + " is poisoned.");
+						nightOneScript.currentPoisoned = true;
+					}
+				}
+			}
 			if (selectedName != "" && selectedName2 != "")
 			{
 				Player selectedPlayer = GameManager.Instance.playerOrder[selectedNameIndex];
@@ -123,12 +137,13 @@ public class ToggleListPopulator : MonoBehaviour
 					int x = Random.Range(0, 2);
 					if (x == 0)
 					{
-						Debug.Log("Yes.");
+						Debug.Log("Poisoned: Yes.");
 						nightOneScript.infoText.text = "Fortune Teller Answer: Yes.";
 					}
 					else
 					{
-						Debug.Log("Fortune Teller Answer: No.");
+						Debug.Log("Poisoned: No.");
+						nightOneScript.infoText.text = "Fortune Teller Answer: No.";
 					}
 					nightOneScript.currentPoisoned = false;
 				}
@@ -137,13 +152,13 @@ public class ToggleListPopulator : MonoBehaviour
 				{
 					nightOneScript.infoText.gameObject.transform.position = nightOneScript.onscreenLocation.transform.position;
 					nightOneScript.infoText.text = "Fortune Teller Answer: Yes.";
-					Debug.Log("Yes.");
+					Debug.Log("Nonpoisoned: Yes.");
 				}
 				else
 				{
 					nightOneScript.infoText.gameObject.transform.position = nightOneScript.onscreenLocation.transform.position;
 					nightOneScript.infoText.text = "Fortune Teller Answer: No.";
-					Debug.Log("No.");
+					Debug.Log("Nonpoisoned: No.");
 				}
 			}
 			else
