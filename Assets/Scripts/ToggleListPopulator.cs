@@ -117,12 +117,32 @@ public class ToggleListPopulator : MonoBehaviour
 				Player selectedPlayer2 = GameManager.Instance.playerOrder[selectedNameIndex2];
 				Debug.Log("FT pick 1 is " + selectedPlayer.playerName + ", who is a " + selectedPlayer.alignment);
 				Debug.Log("FT pick 2 is " + selectedPlayer2.playerName + ", who is a " + selectedPlayer2.alignment);
+				if (nightOneScript.currentPoisoned == true)
+				{
+					nightOneScript.infoText.gameObject.transform.position = nightOneScript.onscreenLocation.transform.position;
+					int x = Random.Range(0, 2);
+					if (x == 0)
+					{
+						Debug.Log("Yes.");
+						nightOneScript.infoText.text = "Fortune Teller Answer: Yes.";
+					}
+					else
+					{
+						Debug.Log("Fortune Teller Answer: No.");
+					}
+					nightOneScript.currentPoisoned = false;
+				}
+				else
 				if (selectedPlayer.alignment == CharacterLibrary.Alignment.Demon || selectedPlayer2.alignment == CharacterLibrary.Alignment.Demon)
 				{
+					nightOneScript.infoText.gameObject.transform.position = nightOneScript.onscreenLocation.transform.position;
+					nightOneScript.infoText.text = "Fortune Teller Answer: Yes.";
 					Debug.Log("Yes.");
 				}
 				else
 				{
+					nightOneScript.infoText.gameObject.transform.position = nightOneScript.onscreenLocation.transform.position;
+					nightOneScript.infoText.text = "Fortune Teller Answer: No.";
 					Debug.Log("No.");
 				}
 			}

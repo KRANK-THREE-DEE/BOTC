@@ -100,14 +100,15 @@ public class NightOne : MonoBehaviour
 		else
 		if (currentRole == "fortuneteller")
 		{
-			Scroll.transform.position = onscreenLocation.transform.position;
-			Butler();
+			//wait a sec so FT can see answer.
+			StartCoroutine(waitFT(5f));
+			//Scroll.transform.position = onscreenLocation.transform.position;
+			//Butler();
 		}
 		else
 		if (currentRole == "butler")
 		{
 			infoText.text = "";
-			//Scroll.transform.position = onscreenLocation.transform.position;
 			if (butlerDone == true)
 			{
 				Debug.Log("GOOD MORNING");
@@ -134,6 +135,19 @@ public class NightOne : MonoBehaviour
 			Poisoner();
 		}
 	}
+
+	IEnumerator waitFT(float duration)
+	{
+		infoText.gameObject.transform.position = onscreenLocation.transform.position;
+		Scroll.transform.position = offscreenLocation.transform.position;
+		Debug.Log("waiting FT");
+		gameText.text = "Displaying FT info.";
+		yield return new WaitForSeconds(duration);
+		Scroll.transform.position = onscreenLocation.transform.position;
+		infoText.gameObject.transform.position = offscreenLocation.transform.position;
+		Butler();
+	}
+
 
 
 	IEnumerator Minions(float delay) //time for minions to see each other (only if 7 or more players)
@@ -342,8 +356,6 @@ public class NightOne : MonoBehaviour
 			string role = selectedTown.characterName;
 			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
-
-		currentPoisoned = false;
 	}
 
 	public void Librarian()
@@ -458,7 +470,6 @@ public class NightOne : MonoBehaviour
 
 			infoText.text += "Either " + roleShownAs.playerName + " or " + other.playerName + " is the " + role + ".";
 		}
-		currentPoisoned = false;
 
 	}
 
@@ -516,6 +527,7 @@ public class NightOne : MonoBehaviour
 					random2 = Random.Range(0, allPlayers.Count);
 					selectedRandom = allPlayers[random2];
 				}
+				currentPoisoned = false;
 			}
 			else
 			{
